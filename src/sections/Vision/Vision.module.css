@@ -1,0 +1,175 @@
+/* src/sections/Vision/Vision.module.css */
+
+.section {
+  padding: 6rem 0;
+  position: relative; /* ドットパターンの基準 */
+  overflow: hidden; /* ドットがはみ出てもスクロールバーを出さない */
+  background-color: var(--light); /* 背景色 */
+}
+
+.visionContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 基本は2カラム */
+  align-items: center; /* 要素を垂直中央揃え */
+  gap: 4rem; /* カラム間の隙間 */
+}
+
+/* --- 左側コンテンツ --- */
+.visionContent {
+  /* 特に指定なし */
+}
+
+.visionContent h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem; /* 下線分のスペースも含めて調整 */
+  position: relative;
+  color: var(--dark);
+}
+
+/* 見出し下線 */
+.visionContent h2::after {
+  content: "";
+  position: absolute;
+  bottom: -12px; /* h2のmargin-bottomに合わせて調整 */
+  left: 0;
+  width: 60px;
+  height: 5px;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+}
+
+.visionContent p {
+  margin-bottom: 1.5rem;
+  color: var(--gray-dark);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.visionContent .button {
+  /* ボタンのマージン */
+  margin-top: 1.5rem;
+}
+
+/* --- 右側画像 --- */
+.visionImage {
+  position: relative; /* ドットパターンの基準 */
+  width: 100%;
+}
+
+.visionImage img {
+  width: 100%;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: block; /* 下部の余分な隙間を防ぐ */
+}
+
+/* 装飾ドット */
+.visionDots {
+  position: absolute;
+  z-index: -1; /* 画像の後ろへ */
+  opacity: 0.2; /* 少し薄く */
+  pointer-events: none; /* クリックを透過 */
+  will-change: transform; /* アニメーションのヒント */
+}
+
+.dotsTopRight {
+  width: 180px;
+  height: 180px;
+  top: -50px;
+  right: -70px;
+  transform: rotate(15deg);
+}
+
+.dotsBottomLeft {
+  width: 140px;
+  height: 140px;
+  bottom: -60px;
+  left: -80px;
+  transform: rotate(-10deg);
+  opacity: 0.15; /* こちらはさらに薄く */
+}
+
+/* --- ボタン (共通スタイルを利用) --- */
+/* .button, .buttonPrimary は index.css または共通コンポーネントで定義想定 */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--border-radius-lg);
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  transition-property: background-color, color, border-color;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.button svg {
+  width: 1em;
+  height: 1em;
+  margin-left: 0.3em;
+}
+.buttonPrimary {
+  background: var(--gradient-primary);
+  color: white;
+}
+.buttonPrimary:hover {
+  color: white;
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 992px) {
+  .visionContainer {
+    grid-template-columns: 1fr; /* 1カラムにする */
+    gap: 3rem; /* ギャップ調整 */
+    text-align: center; /* 中央揃え */
+  }
+
+  .visionImage {
+    order: -1; /* 画像を上に配置 */
+    max-width: 500px; /* 画像が大きくなりすぎないように */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .visionContent h2 {
+    font-size: 2.5rem;
+    margin-left: auto; /* 中央揃え */
+    margin-right: auto; /* 中央揃え */
+    display: inline-block; /* 中央揃えのため */
+  }
+  .visionContent h2::after {
+    left: 50%; /* 下線を中央に */
+    transform: translateX(-50%);
+  }
+  .visionContent {
+    max-width: 600px; /* テキスト幅を制限 */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+  .visionContent h2 {
+    font-size: 2.2rem;
+  }
+  .dotsTopRight {
+    width: 120px;
+    height: 120px;
+    top: -30px;
+    right: -40px;
+  }
+  .dotsBottomLeft {
+    width: 100px;
+    height: 100px;
+    bottom: -40px;
+    left: -50px;
+  }
+}

@@ -1,68 +1,144 @@
+/* src/index.css */
+
+/* Google Fonts のインポート */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap");
+
+/* --- CSS変数定義 --- */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --primary: #3a86ff; /* メインブルー */
+  --secondary: #8338ec; /* パープル */
+  --accent: #ff006e; /* アクセントピンク */
+  --light: #ffffff;
+  --dark: #1a1a1a; /* より濃い黒 */
+  --gray-light: #f8f9fa; /* 明るいグレー */
+  --gray-medium: #e9ecef; /* 中間グレー */
+  --gray-dark: #6c757d; /* 暗いグレー */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* グラデーション */
+  --gradient-primary: linear-gradient(120deg, var(--primary), var(--secondary));
+  --gradient-light: linear-gradient(
+    120deg,
+    rgba(58, 134, 255, 0.05),
+    rgba(131, 56, 236, 0.05)
+  );
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* シャドウ */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.1);
+
+  /* 角丸 */
+  --border-radius-sm: 6px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 20px;
+
+  /* トランジション */
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-motion: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Framer Motion 向け */
+
+  /* コンテナ幅 */
+  --container-width: 1140px;
+  --container-padding: 1.5rem;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* --- 基本リセット & グローバルスタイル --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+
+html {
+  scroll-behavior: smooth;
+  /* スクロールバーのデザイン（オプション） */
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--gray-light);
+}
+
+/* Webkit系ブラウザ用スクロールバー */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gray-light);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+  border: 2px solid var(--gray-light);
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  font-family: "Noto Sans JP", sans-serif;
+  color: var(--dark);
+  background-color: var(--light);
+  overflow-x: hidden; /* 横スクロールバーを防止 */
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased; /* フォントを滑らかに */
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* アクセシビリティ: フォーカス時のアウトライン */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+/* --- 基本要素スタイル --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--dark); /* デフォルトの色を明示 */
+}
+
+p {
+  margin-bottom: 1rem; /* 段落下のマージンをデフォルトで設定 */
+  color: var(--gray-dark); /* 基本のテキスト色 */
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary);
+  transition: color var(--transition-smooth);
+}
+a:hover {
+  color: var(--secondary);
+}
+
+img,
+svg {
+  /* SVGも含む */
+  max-width: 100%;
+  height: auto;
+  display: block; /* vertical-align 問題を避ける */
+}
+
+ul,
+ol {
+  list-style: none; /* デフォルトでリストマーカーを消す */
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-family: inherit; /* フォントを継承 */
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border: none;
+  background: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* --- ヘルパークラス --- */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
 }
+
+/* 他にも共通で使うスタイルがあればここに追加 (例: .sr-only スクリーンリーダー用テキストなど) */

@@ -1,0 +1,144 @@
+/* src/sections/Footer/Footer.module.css */
+
+.footer {
+  padding: 5rem 0 3rem; /* 上に十分な余白、下は少し詰める */
+  background-color: var(--dark); /* 背景は濃い色 */
+  color: var(--gray-medium); /* 基本テキスト色 */
+  font-size: 0.95rem;
+}
+
+.footerContainer {
+  display: grid;
+  /* カラム数を自動調整、最小幅200px */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem 2rem; /* 行間3rem, 列間2rem */
+  margin-bottom: 4rem; /* コピーライトとの間に余白 */
+  padding-bottom: 3rem; /* 下線を引くためのスペース */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 区切り線 */
+}
+
+/* 左: ロゴと情報 */
+.footerInfo {
+  /* grid-column: span 1; */ /* 必要なら */
+}
+
+.footerLogo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem; /* 説明文との間隔 */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--light); /* ロゴテキストは白 */
+}
+/* ロゴアイコン (Headerから流用) */
+.logoIcon {
+  color: var(--primary);
+  font-size: 1.5rem;
+  display: inline-block;
+}
+/* AIラボ部分 (Headerから流用) */
+.logoTextAi {
+  font-weight: 900;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-left: 0.2em;
+}
+
+.footerInfo p {
+  margin-bottom: 0; /* Info内の最後の要素 */
+  opacity: 0.8;
+  line-height: 1.6;
+  color: var(--gray-medium); /* pの色を明示 */
+}
+
+/* 中央・右: リンク列 */
+.footerLinks {
+  /* 特に指定なし */
+}
+
+.footerLinks h3 {
+  margin-bottom: 1.5rem; /* リストとの間隔 */
+  font-size: 1.1rem;
+  color: var(--light); /* 見出しは白 */
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem; /* 下線用のスペース */
+}
+/* 見出しの下線 */
+.footerLinks h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px; /* 短めの線 */
+  height: 2px;
+  background-color: var(--primary);
+}
+
+.footerLinks ul {
+  list-style: none;
+}
+.footerLinks li {
+  margin-bottom: 0.8rem; /* リンク間の隙間 */
+}
+
+.footerLinks a {
+  color: var(--gray-medium);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: var(--transition-smooth);
+  transition-property: color, opacity, padding-left; /* アニメーション対象 */
+  display: inline-block; /* padding-leftアニメーションのため */
+}
+.footerLinks a:hover {
+  opacity: 1;
+  color: var(--light);
+  padding-left: 8px; /* ホバーで少し右にずらす */
+}
+
+/* コピーライト */
+.copyright {
+  text-align: center;
+  /* padding-top: 3rem; */ /* 上の border-bottom で区切るので不要 */
+  opacity: 0.7;
+  font-size: 0.9rem;
+  color: var(--gray-medium);
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 768px) {
+  .footer {
+    padding: 4rem 0 2rem;
+  }
+  /* auto-fit で自動調整されるはずだが、必要なら調整 */
+  /* .footerContainer { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); } */
+}
+
+@media (max-width: 576px) {
+  .footerContainer {
+    grid-template-columns: 1fr; /* スマホでは完全に1列 */
+    gap: 2.5rem; /* ギャップ調整 */
+    text-align: center; /* テキスト中央揃え */
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  .footerInfo {
+    margin-bottom: 1rem; /* 他の要素との区切り */
+  }
+  .footerLogo {
+    justify-content: center; /* ロゴ中央揃え */
+  }
+  .footerLinks h3::after {
+    left: 50%; /* 下線中央揃え */
+    transform: translateX(-50%);
+  }
+  .footerLinks ul {
+    margin-top: 1rem;
+  }
+  .footerLinks a:hover {
+    padding-left: 0; /* スマホホバーではずらさない */
+  }
+}

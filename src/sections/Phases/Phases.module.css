@@ -1,0 +1,83 @@
+/* src/sections/Phases/Phases.module.css */
+
+/* セクション共通スタイル (他のセクションでも使うなら共通化も検討) */
+.section {
+  padding: 6rem 0;
+}
+
+/* 背景色グレー */
+.bgGray {
+  background-color: var(--gray-light);
+}
+
+/* セクションヘッダー */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sectionHeader h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* 見出し下線 */
+.sectionHeader h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 5px;
+  background: var(--gradient-primary);
+  border-radius: 3px;
+}
+
+/* 見出しの数字ハイライト */
+.highlightNumber {
+  color: var(--primary);
+}
+
+.sectionHeader p {
+  font-size: 1.1rem;
+  color: var(--gray-dark);
+  margin-bottom: 0; /* ヘッダー内の最後の要素 */
+}
+
+/* カードグリッド */
+.phasesGrid {
+  display: grid;
+  /* カラム数を自動調整、最小幅280px、最大1fr */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem; /* グリッド間の隙間 */
+  align-items: stretch; /* カードの高さを揃える（PhaseCardのheight: 100%と連携） */
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+  .sectionHeader h2 {
+    font-size: 2.2rem;
+  }
+  /* モバイルでは縦1列にする場合 */
+  /* .phasesGrid { grid-template-columns: 1fr; } */
+  /* auto-fit を使っているので、幅が足りなくなれば自動で1列になるはず */
+}
+
+@media (max-width: 576px) {
+  .sectionHeader h2 {
+    font-size: 2rem;
+  }
+  .phasesGrid {
+    gap: 1.5rem;
+  } /* モバイルでは少しギャップを詰める */
+}

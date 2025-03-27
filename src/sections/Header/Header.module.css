@@ -1,0 +1,156 @@
+/* src/sections/Header/Header.module.css */
+
+.header {
+  padding: 1rem 0;
+  position: fixed; /* 画面上部に固定 */
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* 他の要素より手前に表示 */
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px); /* 背景をぼかす（すりガラス効果） */
+  border-bottom: 1px solid transparent; /* 初期状態では境界線なし */
+  transition: padding 0.3s ease, background-color 0.3s ease,
+    backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* スクロールされた時のスタイル */
+.scrolled {
+  padding: 0.75rem 0; /* 少し高さを詰める */
+  background-color: rgba(255, 255, 255, 0.95); /* 少し不透明に */
+  box-shadow: var(--shadow-md); /* 下に影をつける */
+  border-bottom-color: var(--gray-medium); /* 下境界線を表示 */
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- ロゴ --- */
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none; /* 下線を消す */
+}
+.logo:hover {
+  color: var(--primary); /* ホバー時に少し色を変える */
+}
+
+.logoIcon {
+  color: var(--primary);
+  font-size: 1.5rem;
+  display: inline-block; /* アニメーションのため */
+  /* CSS @keyframes pulse はFramer Motionで制御するため削除 */
+}
+
+.logoTextAi {
+  font-weight: 900;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* -webkit-text-fill-color の代替 */
+  margin-left: 0.2em;
+}
+
+/* --- ナビゲーション --- */
+.nav ul {
+  display: flex;
+  align-items: center; /* ボタンと高さを合わせる */
+  list-style: none;
+  gap: 2.5rem;
+}
+
+.nav a {
+  color: var(--dark);
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: color var(--transition-smooth);
+}
+
+/* メニュー項目の下線アニメーション */
+.nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+.nav a:hover {
+  color: var(--primary);
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* --- 共通ボタンスタイル (index.css から移動 or 共通化も検討) --- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* 中央揃え */
+  gap: 0.5em;
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--border-radius-lg);
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap; /* ボタン内テキストの折り返しを防ぐ */
+}
+
+/* プライマリボタンスタイル */
+.buttonPrimary {
+  background: var(--gradient-primary);
+  color: white;
+}
+/* ホバー効果はFramer Motionで制御するため、CSSの :hover はシンプルに */
+.buttonPrimary:hover {
+  color: white; /* 色は変えない */
+  /* transform, box-shadow は motion.a で制御 */
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 768px) {
+  .headerContainer {
+    flex-direction: column; /* 縦並びにする */
+    gap: 1rem;
+  }
+  .nav ul {
+    gap: 1.5rem;
+    justify-content: center; /* 中央揃え */
+    flex-wrap: wrap; /* 折り返し */
+  }
+  /* モバイルでは最初から少し背景色をつける */
+  .header:not(.scrolled) {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .nav ul {
+    gap: 1rem;
+  }
+  .nav a {
+    font-size: 0.9rem;
+  }
+  .button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,204 @@
+/* src/sections/Hero/Hero.module.css */
+
+.hero {
+  min-height: 100vh; /* 画面の高さいっぱいに */
+  height: auto;
+  /* ヘッダーの高さを考慮 (可変長ヘッダーの場合JSで高さを取得するのが望ましい) */
+  /* padding-top: 100px; */
+  /* padding-bottom: 80px; */
+  display: flex; /* 垂直中央揃えのため */
+  align-items: center;
+  position: relative; /* 背景シェイプの基準点 */
+  overflow: hidden; /* シェイプがはみ出さないように */
+  background: var(--gradient-light); /* グラデーション背景 */
+}
+
+/* ヘッダー分のスペース確保 */
+/* ヘッダーの最大高さを想定してpadding-topを設定するのが簡単 */
+.hero {
+  padding-top: 120px; /* Headerの最大高さ + 余白 */
+  padding-bottom: 80px;
+}
+
+/* --- 背景シェイプ --- */
+.heroShapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0; /* コンテンツより後ろ */
+}
+
+.heroShape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+  filter: blur(60px); /* ぼかしを少し強く */
+  /* animation は Framer Motion で制御するため削除 */
+  will-change: transform, opacity; /* アニメーションのパフォーマンス向上 */
+}
+
+.shape1 {
+  width: 450px; /* 少し大きく */
+  height: 450px;
+  background: var(--primary);
+  top: 8%;
+  left: 3%;
+}
+
+.shape2 {
+  width: 350px;
+  height: 350px;
+  background: var(--secondary);
+  bottom: 12%;
+  right: 8%;
+}
+
+.shape3 {
+  width: 250px;
+  height: 250px;
+  background: var(--accent);
+  top: 25%;
+  right: 28%;
+}
+
+/* --- ヒーローコンテンツ --- */
+.heroContainer {
+  position: relative; /* 背景シェイプより手前に */
+  z-index: 1;
+}
+
+.heroContent {
+  max-width: 680px; /* 少し広げる */
+}
+
+.heroContent h1 {
+  font-size: 3.6rem; /* 少し大きく */
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2; /* 行間少し詰める */
+}
+
+.highlight {
+  position: relative;
+  display: inline-block;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding: 0 0.1em; /* グラデーションが見えるように少し余白 */
+}
+
+/* ハイライトの下線 */
+.highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 0.1em; /* paddingに合わせる */
+  right: 0.1em;
+  height: 5px; /* 少し太く */
+  background: linear-gradient(
+    to right,
+    rgba(58, 134, 255, 0.3),
+    rgba(131, 56, 236, 0.3)
+  );
+  border-radius: 2px;
+  z-index: -1;
+  transform: skewX(-15deg);
+  opacity: 0.8; /* 少し透明度調整 */
+}
+
+.heroContent p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  color: var(--gray-dark);
+  max-width: 580px; /* 見出しより少し狭く */
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* モバイルで折り返し */
+}
+
+/* --- ボタン (Header.module.css と共通化すべきか検討) --- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--border-radius-lg);
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  transition-property: background-color, color, border-color; /* transform, shadow以外 */
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.button svg {
+  /* ボタン内SVGのサイズ調整 */
+  width: 1em;
+  height: 1em;
+  margin-left: 0.3em;
+}
+
+.buttonPrimary {
+  background: var(--gradient-primary);
+  color: white;
+}
+.buttonPrimary:hover {
+  color: white;
+}
+
+.buttonSecondary {
+  color: var(--primary);
+  background-color: rgba(58, 134, 255, 0.1);
+  border: 1px solid rgba(58, 134, 255, 0.2);
+}
+.buttonSecondary:hover {
+  background-color: rgba(58, 134, 255, 0.15);
+  color: var(--primary);
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 992px) {
+  .heroContent h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    /* モバイルではヘッダーが高くなる可能性を考慮 */
+    padding-top: 160px; /* headerContainer が column になる高さ */
+    padding-bottom: 60px;
+    text-align: center; /* テキスト中央揃え */
+  }
+  .heroContent p {
+    margin-left: auto;
+    margin-right: auto; /* 中央揃え */
+  }
+  .heroContent h1 {
+    font-size: 2.5rem;
+  }
+  .heroButtons {
+    justify-content: center; /* ボタン中央揃え */
+  }
+}
+
+@media (max-width: 576px) {
+  .heroContent h1 {
+    font-size: 2.2rem;
+  }
+  .heroContent p {
+    font-size: 1rem;
+  }
+  /* ボタンサイズは global or Header の media query で調整 */
+}

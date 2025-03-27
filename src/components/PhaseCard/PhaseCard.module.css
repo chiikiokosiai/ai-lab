@@ -1,0 +1,77 @@
+/* src/components/PhaseCard/PhaseCard.module.css */
+
+.card {
+  background-color: var(--light);
+  border-radius: var(--border-radius-md);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-sm);
+  position: relative; /* 番号やボーダーの基準点 */
+  overflow: hidden; /* ボーダーがはみ出さないように */
+  border: 1px solid var(--gray-medium);
+  transition: border-color var(--transition-smooth); /* ホバー時のボーダー色変化 */
+  height: 100%; /* Gridレイアウトで高さを揃えるため */
+  will-change: transform, box-shadow; /* アニメーションのヒント */
+}
+
+/* ホバー時のスタイル（Framer Motionで制御する部分以外） */
+.card:hover {
+  border-color: var(--primary);
+  /* transform, box-shadow は motion.div で制御 */
+}
+
+/* 背景の大きな数字 */
+.cardNumber {
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--gray-light);
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  line-height: 1;
+  z-index: 0; /* コンテンツより後ろ */
+  user-select: none; /* 選択不可 */
+  pointer-events: none; /* クリックなどを透過 */
+}
+
+/* アイコン */
+.cardIcon {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  display: inline-block; /* marginを有効にするため */
+  position: relative; /* 数字より手前に */
+  z-index: 1;
+}
+
+/* タイトル */
+.cardTitle {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  font-weight: 700;
+  color: var(--dark); /* 色を明示 */
+}
+
+/* 説明文 */
+.cardDescription {
+  color: var(--gray-dark);
+  position: relative;
+  z-index: 1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0; /* カード内の最後の要素なので下マージン不要 */
+}
+
+/* 左ボーダー */
+.cardBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--gradient-primary);
+  transform-origin: top; /* アニメーションの基点（上から伸びる） */
+  /* transform: scaleY(0); は Framer Motion で制御 */
+  z-index: 2; /* 他の要素より手前 */
+}
