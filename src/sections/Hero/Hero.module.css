@@ -72,11 +72,10 @@
 .highlight {
   position: relative;
   display: inline-block;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding: 0 0.1em; /* グラデーションが見えるように少し余白 */
+  color: #ffffff; /* 白色のテキストに変更 */
+  font-weight: 900; /* より太く */
+  padding: 0 0.1em; /* 余白を維持 */
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* 青色の光る効果を追加 */
 }
 
 /* ハイライトの下線 */
@@ -87,15 +86,11 @@
   left: 0.1em; /* paddingに合わせる */
   right: 0.1em;
   height: 5px; /* 少し太く */
-  background: linear-gradient(
-    to right,
-    rgba(58, 134, 255, 0.3),
-    rgba(131, 56, 236, 0.3)
-  );
+  background: rgba(255, 255, 255, 0.6); /* 白っぽい下線に変更 */
   border-radius: 2px;
   z-index: -1;
   transform: skewX(-15deg);
-  opacity: 0.8; /* 少し透明度調整 */
+  opacity: 0.8; /* 透明度調整 */
 }
 
 .heroContent p {
@@ -137,28 +132,35 @@
 }
 
 .hero .heroButtons .buttonPrimary {
-  background: rgba(58, 134, 255, 0.8) !important; /* 透明度を持った青色の背景 */
+  background: linear-gradient(
+    120deg,
+    rgba(58, 134, 255, 0.8),
+    rgba(131, 56, 236, 0.8)
+  ); /* 透明度を持ったグラデーション */
   color: white !important;
   font-weight: 700;
   border: 1px solid rgba(58, 134, 255, 0.3);
 }
 
 .hero .heroButtons .buttonPrimary:hover {
-  background: rgba(58, 134, 255, 0.95) !important; /* ホバー時はより不透明に */
+  background: linear-gradient(
+    120deg,
+    rgba(58, 134, 255, 0.95),
+    rgba(131, 56, 236, 0.95)
+  ); /* ホバー時はより不透明に */
   color: white !important;
 }
 
 .hero .heroButtons .buttonSecondary {
-  color: white !important; /* 強制的に適用 */
-  background-color: rgba(58, 134, 255, 0.7) !important; /* より濃く、強制適用 */
-  border: 1px solid rgba(58, 134, 255, 0.3);
-  font-weight: 700;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  color: white; /* 文字色を白に維持 */
+  background-color: rgba(58, 134, 255, 0.5); /* 背景の透明度を下げて濃くする */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* ボーダーも調整 */
+  font-weight: 700; /* より太く */
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 読みやすさ向上のための影 */
 }
-
 .hero .heroButtons .buttonSecondary:hover {
-  background-color: rgba(58, 134, 255, 0.9) !important;
-  color: white !important;
+  background-color: rgba(58, 134, 255, 0.7); /* ホバー時はさらに濃く */
+  color: white;
 }
 
 /* --- レスポンシブ --- */

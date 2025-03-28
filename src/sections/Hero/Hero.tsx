@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import styles from "./Hero.module.css";
 // 背景動画をインポート
 import heroBackgroundVideo from "../../assets/hero-background.mp4";
-// ボタン用SVGアイコンをインポート (必要なら後で作成・配置)
-// import ArrowIcon from '../../assets/arrow-right.svg';
 
 // コンテンツ全体の表示アニメーション（Staggering用）
 const containerVariants = {
@@ -46,9 +44,9 @@ const Hero = () => {
 
       // モバイルではシェイプのサイズを調整するなどの処理
       if (isMobile) {
-        // モバイル用のアニメーション設定を適用
+        // モバイル用の設定
       } else {
-        // デスクトップ用のアニメーション設定を適用
+        // デスクトップ用の設定
       }
     };
 
@@ -86,7 +84,7 @@ const Hero = () => {
           initial="hidden"
           animate={controls} // useAnimationフックで制御
           whileInView="visible" // 要素が画面内に入ったらアニメーション開始
-          viewport={{ once: false, amount: 0.3 }} // 1度だけ、30%見えたら発火
+          viewport={{ once: false, amount: 0.3 }} // 何度でも、30%見えたら発火
         >
           {/* 見出し */}
           <motion.h1 variants={itemVariants}>
@@ -98,9 +96,7 @@ const Hero = () => {
 
           {/* 説明文 */}
           <motion.p variants={itemVariants}>
-            地域おこし協力隊が生成AIを活用し<br></br>
-            「地域課題の解決力」と「自己実現力」を高める<br></br>
-            未来をデザインする実践型プログラム
+            地域おこし協力隊が生成AIを活用し「地域課題の解決力」と「自己実現力」を高める。未来をデザインする実践型プログラム。
           </motion.p>
 
           {/* ボタンエリア */}
@@ -116,7 +112,6 @@ const Hero = () => {
               transition={{ duration: 0.2 }}
             >
               プログラム詳細
-              {/* アイコンはSVGを直接記述するか、imgタグで読み込む */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -129,7 +124,6 @@ const Hero = () => {
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
                 />
               </svg>
-              {/* <img src={ArrowIcon} alt="" /> */}
             </motion.a>
 
             {/* セカンダリボタン */}
