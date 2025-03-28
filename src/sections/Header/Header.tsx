@@ -211,8 +211,7 @@ const Header = () => {
               animate="animate" // animate状態を常に適用
             >
               💡
-            </motion.span>
-            地域おこし協力隊 ×{" "}
+            </motion.span>{" "}
             <span className={styles.logoTextAi}>生成AIラボ</span>
           </a>
 
