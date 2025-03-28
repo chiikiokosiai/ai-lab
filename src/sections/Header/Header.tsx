@@ -1,9 +1,12 @@
 // src/sections/Header/Header.tsx
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // AnimatePresenceを追加
-import styles from "./Header.module.css"; // CSS Modulesをインポート
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom"; // useLocationも追加
+import styles from "./Header.module.css";
 
 const Header = () => {
+  // 現在のページパスを取得
+  const location = useLocation();
   // スクロール状態を管理するためのState
   const [scrolled, setScrolled] = useState(false);
   // モバイルメニューの開閉状態を管理するState
@@ -41,10 +44,21 @@ const Header = () => {
     };
   }, [menuOpen]);
 
-  // メニュー項目をクリックしたときにモバイルメニューを閉じる
+  // メニュー項目をクリックしたときの挙動
   const handleNavItemClick = () => {
     setMenuOpen(false);
   };
+
+  // 特定のセクションにスクロールする関数
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // ホームページかどうかのチェック
+  const isHomePage = location.pathname === "/";
 
   // ヘッダー全体のアニメーション設定
   const headerVariants = {
@@ -142,9 +156,22 @@ const Header = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  <a href="#concept" onClick={handleNavItemClick}>
-                    コンセプト
-                  </a>
+                  {isHomePage ? (
+                    <a
+                      href="#concept"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavItemClick();
+                        scrollToSection("concept");
+                      }}
+                    >
+                      コンセプト
+                    </a>
+                  ) : (
+                    <Link to="/" onClick={handleNavItemClick}>
+                      コンセプト
+                    </Link>
+                  )}
                 </motion.li>
                 <motion.li
                   custom={1}
@@ -152,9 +179,22 @@ const Header = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  <a href="#phases" onClick={handleNavItemClick}>
-                    5つのステップ
-                  </a>
+                  {isHomePage ? (
+                    <a
+                      href="#phases"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavItemClick();
+                        scrollToSection("phases");
+                      }}
+                    >
+                      5つのステップ
+                    </a>
+                  ) : (
+                    <Link to="/" onClick={handleNavItemClick}>
+                      5つのステップ
+                    </Link>
+                  )}
                 </motion.li>
                 <motion.li
                   custom={2}
@@ -162,9 +202,22 @@ const Header = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  <a href="#vision" onClick={handleNavItemClick}>
-                    ビジョン
-                  </a>
+                  {isHomePage ? (
+                    <a
+                      href="#vision"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavItemClick();
+                        scrollToSection("vision");
+                      }}
+                    >
+                      ビジョン
+                    </a>
+                  ) : (
+                    <Link to="/" onClick={handleNavItemClick}>
+                      ビジョン
+                    </Link>
+                  )}
                 </motion.li>
                 <motion.li
                   custom={3}
@@ -172,9 +225,7 @@ const Header = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  <motion.a
-                    href="#contact"
-                    className={`${styles.button} ${styles.buttonPrimary}`}
+                  <motion.div
                     whileHover={{
                       y: -3,
                       boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
@@ -182,8 +233,13 @@ const Header = () => {
                     transition={{ duration: 0.2 }}
                     onClick={handleNavItemClick}
                   >
-                    お問い合わせ
-                  </motion.a>
+                    <Link
+                      to="/contact"
+                      className={`${styles.button} ${styles.buttonPrimary}`}
+                    >
+                      お問い合わせ
+                    </Link>
+                  </motion.div>
                 </motion.li>
               </ul>
             </nav>
@@ -203,18 +259,18 @@ const Header = () => {
         {/* containerクラスはindex.cssで定義済み */}
         <div className={`container ${styles.headerContainer}`}>
           {/* ロゴ */}
-          <a href="#" className={styles.logo}>
+          <Link to="/" className={styles.logo}>
             {/* ロゴアイコンにアニメーション適用 */}
             <motion.span
               className={styles.logoIcon}
               variants={logoIconVariants}
               animate="animate" // animate状態を常に適用
             >
-              {/* 💡 */}
+              💡
             </motion.span>
             地域おこし協力隊×{" "}
             <span className={styles.logoTextAi}>生成AIラボ</span>
-          </a>
+          </Link>
 
           {/* ハンバーガーメニューボタン（モバイル用） */}
           <motion.button
@@ -233,34 +289,76 @@ const Header = () => {
             <ul>
               {/* 各メニュー項目 */}
               <li>
-                <a href="#concept" onClick={handleNavItemClick}>
-                  コンセプト
-                </a>
+                {isHomePage ? (
+                  <a
+                    href="#concept"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavItemClick();
+                      scrollToSection("concept");
+                    }}
+                  >
+                    コンセプト
+                  </a>
+                ) : (
+                  <Link to="/" onClick={handleNavItemClick}>
+                    コンセプト
+                  </Link>
+                )}
               </li>
               <li>
-                <a href="#phases" onClick={handleNavItemClick}>
-                  5つのステップ
-                </a>
+                {isHomePage ? (
+                  <a
+                    href="#phases"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavItemClick();
+                      scrollToSection("phases");
+                    }}
+                  >
+                    5つのステップ
+                  </a>
+                ) : (
+                  <Link to="/" onClick={handleNavItemClick}>
+                    5つのステップ
+                  </Link>
+                )}
               </li>
               <li>
-                <a href="#vision" onClick={handleNavItemClick}>
-                  ビジョン
-                </a>
+                {isHomePage ? (
+                  <a
+                    href="#vision"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavItemClick();
+                      scrollToSection("vision");
+                    }}
+                  >
+                    ビジョン
+                  </a>
+                ) : (
+                  <Link to="/" onClick={handleNavItemClick}>
+                    ビジョン
+                  </Link>
+                )}
               </li>
               {/* お問い合わせボタン */}
               <li>
-                <motion.a
-                  href="#contact"
-                  className={`${styles.button} ${styles.buttonPrimary}`} // ボタン用のスタイルクラス
+                <motion.div
                   whileHover={{
                     y: -3,
                     boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
                   }} // ホバーアニメーション
                   transition={{ duration: 0.2 }}
-                  onClick={handleNavItemClick}
                 >
-                  お問い合わせ
-                </motion.a>
+                  <Link
+                    to="/contact"
+                    className={`${styles.button} ${styles.buttonPrimary}`} // ボタン用のスタイルクラス
+                    onClick={handleNavItemClick}
+                  >
+                    お問い合わせ
+                  </Link>
+                </motion.div>
               </li>
             </ul>
           </nav>
@@ -284,9 +382,22 @@ const Header = () => {
                       initial="hidden"
                       animate="visible"
                     >
-                      <a href="#concept" onClick={handleNavItemClick}>
-                        コンセプト
-                      </a>
+                      {isHomePage ? (
+                        <a
+                          href="#concept"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleNavItemClick();
+                            scrollToSection("concept");
+                          }}
+                        >
+                          コンセプト
+                        </a>
+                      ) : (
+                        <Link to="/" onClick={handleNavItemClick}>
+                          コンセプト
+                        </Link>
+                      )}
                     </motion.li>
                     <motion.li
                       custom={1}
@@ -294,9 +405,22 @@ const Header = () => {
                       initial="hidden"
                       animate="visible"
                     >
-                      <a href="#phases" onClick={handleNavItemClick}>
-                        5つのステップ
-                      </a>
+                      {isHomePage ? (
+                        <a
+                          href="#phases"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleNavItemClick();
+                            scrollToSection("phases");
+                          }}
+                        >
+                          5つのステップ
+                        </a>
+                      ) : (
+                        <Link to="/" onClick={handleNavItemClick}>
+                          5つのステップ
+                        </Link>
+                      )}
                     </motion.li>
                     <motion.li
                       custom={2}
@@ -304,9 +428,22 @@ const Header = () => {
                       initial="hidden"
                       animate="visible"
                     >
-                      <a href="#vision" onClick={handleNavItemClick}>
-                        ビジョン
-                      </a>
+                      {isHomePage ? (
+                        <a
+                          href="#vision"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleNavItemClick();
+                            scrollToSection("vision");
+                          }}
+                        >
+                          ビジョン
+                        </a>
+                      ) : (
+                        <Link to="/" onClick={handleNavItemClick}>
+                          ビジョン
+                        </Link>
+                      )}
                     </motion.li>
                     <motion.li
                       custom={3}
@@ -314,18 +451,21 @@ const Header = () => {
                       initial="hidden"
                       animate="visible"
                     >
-                      <motion.a
-                        href="#contact"
-                        className={`${styles.button} ${styles.buttonPrimary}`}
+                      <motion.div
                         whileHover={{
                           y: -3,
                           boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
                         }}
                         transition={{ duration: 0.2 }}
-                        onClick={handleNavItemClick}
                       >
-                        お問い合わせ
-                      </motion.a>
+                        <Link
+                          to="/contact"
+                          className={`${styles.button} ${styles.buttonPrimary}`}
+                          onClick={handleNavItemClick}
+                        >
+                          お問い合わせ
+                        </Link>
+                      </motion.div>
                     </motion.li>
                   </ul>
                 </nav>

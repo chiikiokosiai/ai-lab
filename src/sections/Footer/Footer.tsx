@@ -1,5 +1,6 @@
 // src/sections/Footer/Footer.tsx
 import { motion } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 // フッターセクション全体のアニメーション
@@ -22,6 +23,19 @@ const linkItemVariants = {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear(); // 現在の年を取得
+  const location = useLocation(); // 現在のページパスを取得
+  const isHomePage = location.pathname === "/";
+
+  // セクションへのスクロール処理
+  const handleSectionScroll = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
+    if (isHomePage) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <motion.footer
@@ -36,10 +50,10 @@ const Footer = () => {
           {/* 左: ロゴと説明 */}
           <div className={styles.footerInfo}>
             {/* ロゴ (Headerと同様のスタイルを適用) */}
-            <div className={styles.footerLogo}>
+            <Link to="/" className={styles.footerLogo}>
               <span className={styles.logoIcon}>💡</span>{" "}
               <span className={styles.logoTextAi}>生成AIラボ</span>
-            </div>
+            </Link>
             <p>
               AI時代の地域活性化をリードする人材育成プログラム。地域とあなたの未来を、共にデザインしましょう。
             </p>
@@ -53,16 +67,43 @@ const Footer = () => {
             <h3>クイックリンク</h3>
             <ul>
               <motion.li variants={linkItemVariants}>
-                <a href="#concept">コンセプト</a>
+                {isHomePage ? (
+                  <a
+                    href="#concept"
+                    onClick={(e) => handleSectionScroll(e, "concept")}
+                  >
+                    コンセプト
+                  </a>
+                ) : (
+                  <Link to="/">コンセプト</Link>
+                )}
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <a href="#phases">5つのステップ</a>
+                {isHomePage ? (
+                  <a
+                    href="#phases"
+                    onClick={(e) => handleSectionScroll(e, "phases")}
+                  >
+                    5つのステップ
+                  </a>
+                ) : (
+                  <Link to="/">5つのステップ</Link>
+                )}
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <a href="#vision">ビジョン</a>
+                {isHomePage ? (
+                  <a
+                    href="#vision"
+                    onClick={(e) => handleSectionScroll(e, "vision")}
+                  >
+                    ビジョン
+                  </a>
+                ) : (
+                  <Link to="/">ビジョン</Link>
+                )}
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <a href="#contact">お問い合わせ</a>
+                <Link to="/contact">お問い合わせ</Link>
               </motion.li>
             </ul>
           </motion.div>
@@ -75,16 +116,24 @@ const Footer = () => {
             <h3>リソース</h3>
             <ul>
               <motion.li variants={linkItemVariants}>
-                <a href="#">ブログ</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  ブログ
+                </a>
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <a href="#">事例紹介</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  事例紹介
+                </a>
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <a href="#">よくある質問</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  よくある質問
+                </a>
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <a href="#">プライバシーポリシー</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  プライバシーポリシー
+                </a>
               </motion.li>
             </ul>
           </motion.div>

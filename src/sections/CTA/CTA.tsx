@@ -1,7 +1,7 @@
 // src/sections/CTA/CTA.tsx
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom"; // React Routerのリンクをインポート
 import styles from "./CTA.module.css";
-// import MailIcon from '../../assets/mail-icon.svg'; // 必要ならアイコンをインポート
 
 // セクション全体の表示アニメーション
 const sectionVariants = {
@@ -63,28 +63,30 @@ const CTA = () => {
           <p>
             地域おこし協力隊の方、自治体担当者の方、企業の方々へ。新しい地域づくりの可能性について、ぜひ一度お話ししましょう。
           </p>
-          <motion.a
-            href="#" // 実際の問い合わせ先リンクに変更
-            className={`${styles.button} ${styles.buttonWhite}`}
+          <motion.div
             whileHover={{
               y: -3,
               boxShadow: "0 8px 15px rgba(255, 255, 255, 0.3)",
             }}
             transition={{ duration: 0.2 }}
           >
-            お問い合わせフォームへ
-            {/* アイコン例 (SVG直接記述) */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              fill="currentColor"
-              viewBox="0 0 16 16"
+            <Link
+              to="/contact"
+              className={`${styles.button} ${styles.buttonWhite}`}
             >
-              <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
-            </svg>
-            {/* <img src={MailIcon} alt="" /> */}
-          </motion.a>
+              お問い合わせフォームへ
+              {/* アイコン例 (SVG直接記述) */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+              </svg>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </motion.section>

@@ -88,7 +88,7 @@ const Hero = () => {
         >
           {/* 見出し */}
           <motion.h1 variants={itemVariants}>
-            AIの力で
+            AIの力で<br></br>
             <span className={styles.highlight}>地域</span>と
             <span className={styles.highlight}>人生</span>
             を変える
@@ -96,7 +96,9 @@ const Hero = () => {
 
           {/* 説明文 */}
           <motion.p variants={itemVariants}>
-            地域おこし協力隊が生成AIを活用し「地域課題の解決力」と「自己実現力」を高める。未来をデザインする実践型プログラム。
+            地域おこし協力隊が生成AIを活用し<br></br>
+            「地域課題の解決力」と「自己実現力」を高める<br></br>
+            未来をデザインする実践型プログラム
           </motion.p>
 
           {/* ボタンエリア */}
