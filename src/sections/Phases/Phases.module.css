@@ -61,23 +61,103 @@
 }
 
 /* --- レスポンシブ --- */
+@media (max-width: 1200px) {
+  .phasesGrid {
+    grid-template-columns: repeat(3, 1fr); /* 大きめの画面では3列 */
+  }
+
+  .sectionHeader h2 {
+    font-size: 2.5rem;
+  }
+
+  .sectionHeader p {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .section {
+    padding: 5rem 0;
+  }
+
+  .sectionHeader {
+    margin-bottom: 3rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2.3rem;
+  }
+
+  .phasesGrid {
+    grid-template-columns: repeat(2, 1fr); /* タブレットでは2列 */
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .section {
     padding: 4rem 0;
   }
+
+  .sectionHeader {
+    margin-bottom: 2.5rem;
+  }
+
   .sectionHeader h2 {
     font-size: 2.2rem;
   }
-  /* モバイルでは縦1列にする場合 */
-  /* .phasesGrid { grid-template-columns: 1fr; } */
-  /* auto-fit を使っているので、幅が足りなくなれば自動で1列になるはず */
+
+  .sectionHeader p {
+    font-size: 1rem;
+    padding: 0 1rem; /* 横余白を追加 */
+  }
+
+  .phasesGrid {
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(240px, 1fr)
+    ); /* 幅を少し小さくして自動調整 */
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 576px) {
+  .section {
+    padding: 3rem 0;
+  }
+
   .sectionHeader h2 {
     font-size: 2rem;
   }
+
+  .sectionHeader h2::after {
+    width: 50px;
+    height: 4px;
+  }
+
+  .sectionHeader p {
+    font-size: 0.95rem;
+  }
+
   .phasesGrid {
-    gap: 1.5rem;
-  } /* モバイルでは少しギャップを詰める */
+    grid-template-columns: 1fr; /* モバイルでは1列 */
+    gap: 1.2rem;
+    max-width: 360px; /* カードの最大幅を制限 */
+    margin: 0 auto; /* 中央揃え */
+  }
+}
+
+/* 極小デバイス用 */
+@media (max-width: 360px) {
+  .section {
+    padding: 2.5rem 0;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.8rem;
+  }
+
+  .sectionHeader p {
+    font-size: 0.9rem;
+  }
 }

@@ -37,6 +37,8 @@
   align-items: center;
   gap: 0.5rem;
   text-decoration: none; /* 下線を消す */
+  z-index: 1210; /* モバイルメニューより前に表示（さらに上げる） */
+  position: relative; /* z-indexを有効にするため */
 }
 .logo:hover {
   color: var(--primary); /* ホバー時に少し色を変える */
@@ -96,6 +98,74 @@
   width: 100%;
 }
 
+/* --- ハンバーガーメニューボタン --- */
+.menuToggle {
+  display: none; /* PCでは非表示 */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px; /* 高さを少し調整 */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1300; /* モバイルメニューより前に表示（さらに上げる） */
+  position: relative; /* z-indexを有効にするため */
+}
+
+.line {
+  width: 100%;
+  height: 3px;
+  background-color: var(--dark);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+  position: relative;
+  display: block;
+}
+
+/* --- モバイルメニュー --- */
+.mobileMenu {
+  display: none; /* PCでは非表示 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.98);
+  z-index: 1200; /* 最大値に近い値に設定 */
+  padding: 6rem 2rem 2rem;
+  overflow-y: auto;
+  isolation: isolate; /* 新しいスタッキングコンテキストを作成 */
+}
+
+.mobileNav ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  height: 100%;
+  justify-content: center;
+}
+
+.mobileNav a {
+  color: var(--dark);
+  font-weight: 600;
+  font-size: 1.5rem;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-smooth);
+  display: block;
+  text-align: center;
+}
+
+.mobileNav a:hover {
+  color: var(--primary);
+  background-color: rgba(58, 134, 255, 0.05);
+}
+
 /* --- 共通ボタンスタイル (index.css から移動 or 共通化も検討) --- */
 .button {
   display: inline-flex;
@@ -125,32 +195,56 @@
 }
 
 /* --- レスポンシブ --- */
-@media (max-width: 768px) {
-  .headerContainer {
-    flex-direction: column; /* 縦並びにする */
-    gap: 1rem;
+@media (max-width: 992px) {
+  /* タブレットサイズから適用するレスポンシブ設定 */
+  .nav {
+    display: none; /* 通常ナビゲーションを非表示 */
   }
-  .nav ul {
-    gap: 1.5rem;
-    justify-content: center; /* 中央揃え */
-    flex-wrap: wrap; /* 折り返し */
+
+  .menuToggle {
+    display: flex; /* ハンバーガーメニューボタンを表示 */
   }
+
+  .mobileMenu {
+    display: block; /* モバイルメニューを表示可能に */
+  }
+
   /* モバイルでは最初から少し背景色をつける */
   .header:not(.scrolled) {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem 0;
   }
+
+  /* メニューオープン時のヘッダー背景を不透明に */
+  .header.menuOpen {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: none;
+  }
 }
 
 @media (max-width: 576px) {
-  .nav ul {
-    gap: 1rem;
+  .menuToggle {
+    width: 26px; /* 少し小さく */
+    height: 20px;
   }
-  .nav a {
-    font-size: 0.9rem;
+
+  .line {
+    height: 4px; /* 線を細く */
   }
+
+  .mobileNav a {
+    font-size: 1.3rem; /* フォントサイズ調整 */
+  }
+
   .button {
     padding: 0.7rem 1.5rem;
     font-size: 0.9rem;
+  }
+
+  /* モバイルメニュー内のボタン */
+  .mobileNav .button {
+    margin-top: 1rem;
+    width: 100%; /* 横幅いっぱい */
+    max-width: 250px; /* 最大幅を制限 */
   }
 }

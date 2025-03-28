@@ -75,3 +75,134 @@
   /* transform: scaleY(0); は Framer Motion で制御 */
   z-index: 2; /* 他の要素より手前 */
 }
+
+/* --- レスポンシブスタイル --- */
+@media (max-width: 1200px) {
+  .card {
+    padding: 2.2rem 1.8rem;
+  }
+
+  .cardNumber {
+    font-size: 4rem;
+  }
+
+  .cardIcon {
+    font-size: 1.8rem;
+  }
+
+  .cardTitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .cardNumber {
+    font-size: 3.5rem;
+    top: 0.3rem;
+    right: 0.8rem;
+  }
+
+  .cardIcon {
+    font-size: 1.7rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .cardDescription {
+    font-size: 0.9rem;
+  }
+
+  .cardBorder {
+    width: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1.8rem 1.5rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .cardNumber {
+    font-size: 3.2rem;
+  }
+
+  .cardIcon {
+    font-size: 1.6rem;
+  }
+
+  .cardTitle {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .card {
+    padding: 1.5rem;
+    text-align: center; /* モバイルでは中央揃え */
+  }
+
+  .cardNumber {
+    font-size: 3rem;
+    top: 0.2rem;
+    right: 0.5rem;
+    opacity: 0.5; /* 少し薄く */
+  }
+
+  .cardIcon {
+    font-size: 1.5rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .cardDescription {
+    font-size: 0.85rem;
+  }
+
+  /* 左ボーダーをモバイルでは下ボーダーに変更するオプション */
+  .cardBorder {
+    width: 100%;
+    height: 4px;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform-origin: left; /* アニメーションの起点を変更 */
+  }
+}
+
+/* 極小デバイス用 */
+@media (max-width: 360px) {
+  .card {
+    padding: 1.3rem 1rem;
+  }
+
+  .cardNumber {
+    font-size: 2.8rem;
+  }
+
+  .cardIcon {
+    font-size: 1.4rem;
+  }
+
+  .cardTitle {
+    font-size: 1rem;
+  }
+
+  .cardDescription {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+}

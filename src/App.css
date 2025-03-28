@@ -5,6 +5,19 @@
   text-align: center;
 }
 
+/* レスポンシブ設定 */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #root {
+    padding: 0.5rem;
+  }
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -39,4 +52,15 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* スクロールのスムーズ化とハンバーガーメニュークリック時の遷移 */
+html {
+  scroll-behavior: smooth !important;
+}
+
+/* メインコンテンツのレスポンシブ調整 */
+main {
+  width: 100%;
+  overflow-x: hidden;
 }

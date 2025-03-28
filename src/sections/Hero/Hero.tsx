@@ -1,5 +1,6 @@
 // src/sections/Hero/Hero.tsx
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
 import styles from "./Hero.module.css";
 // ボタン用SVGアイコンをインポート (必要なら後で作成・配置)
 // import ArrowIcon from '../../assets/arrow-right.svg';
@@ -44,6 +45,40 @@ const shapeVariants = (duration: number, delay: number) => ({
 });
 
 const Hero = () => {
+  // アニメーションコントロール
+  const controls = useAnimation();
+
+  // 画面サイズに応じてアニメーションを調整
+  useEffect(() => {
+    // 画面が読み込まれたらアニメーションを開始
+    controls.start("visible");
+
+    // ウィンドウのリサイズイベントを監視
+    const handleResize = () => {
+      // 必要に応じてアニメーションパラメータを調整
+      // モバイルサイズかどうかを判定
+      const isMobile = window.innerWidth <= 768;
+
+      // モバイルではシェイプのサイズを調整するなどの処理
+      if (isMobile) {
+        // モバイル用のアニメーション設定を適用
+      } else {
+        // デスクトップ用のアニメーション設定を適用
+      }
+    };
+
+    // 初回実行
+    handleResize();
+
+    // リサイズイベントリスナーを追加
+    window.addEventListener("resize", handleResize);
+
+    // クリーンアップ関数
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [controls]);
+
   return (
     // sectionタグにid="concept"を設定
     <section className={styles.hero} id="concept">
@@ -73,6 +108,7 @@ const Hero = () => {
           className={styles.heroContent}
           variants={containerVariants}
           initial="hidden"
+          animate={controls} // useAnimationフックで制御
           whileInView="visible" // 要素が画面内に入ったらアニメーション開始
           viewport={{ once: true, amount: 0.3 }} // 1度だけ、30%見えたら発火
         >
