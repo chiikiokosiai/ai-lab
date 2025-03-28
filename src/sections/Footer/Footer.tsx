@@ -29,7 +29,7 @@ const Footer = () => {
       variants={footerVariants}
       initial="hidden"
       whileInView="visible" // 画面内に入ったら表示
-      viewport={{ once: true, amount: 0.1 }} // 10%見えたら（一度だけ）
+      viewport={{ once: false, amount: 0.1 }} // 10%見えたら（一度だけ）
     >
       <div className={`container`}>
         <div className={styles.footerContainer}>
@@ -37,8 +37,7 @@ const Footer = () => {
           <div className={styles.footerInfo}>
             {/* ロゴ (Headerと同様のスタイルを適用) */}
             <div className={styles.footerLogo}>
-              <span className={styles.logoIcon}>💡</span>
-              地域おこし協力隊 ×{" "}
+              <span className={styles.logoIcon}>💡</span>{" "}
               <span className={styles.logoTextAi}>生成AIラボ</span>
             </div>
             <p>

@@ -70,7 +70,7 @@ const Phases = () => {
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
         >
           <h2>
             育成の<span className={styles.highlightNumber}>5</span>ステップ
@@ -86,7 +86,7 @@ const Phases = () => {
           variants={gridVariants}
           initial="hidden"
           whileInView="visible" // グリッド全体が画面に入ったら子要素のアニメーション開始
-          viewport={{ once: true, amount: 0.1 }} // 10%見えたら
+          viewport={{ once: false, amount: 0.1 }} // 10%見えたら
         >
           {/* データからカードを生成 */}
           {phasesData.map((phase) => (

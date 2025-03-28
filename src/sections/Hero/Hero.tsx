@@ -2,6 +2,8 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import styles from "./Hero.module.css";
+// 背景動画をインポート
+import heroBackgroundVideo from "../../assets/hero-background.mp4";
 // ボタン用SVGアイコンをインポート (必要なら後で作成・配置)
 // import ArrowIcon from '../../assets/arrow-right.svg';
 
@@ -26,23 +28,6 @@ const itemVariants = {
     transition: { duration: 0.6, ease: "easeOut" },
   },
 };
-
-// 背景シェイプのアニメーション
-const shapeVariants = (duration: number, delay: number) => ({
-  animate: {
-    x: [0, 20, -10, 0], // 横方向の動き
-    y: [0, -30, 15, 0], // 縦方向の動き
-    rotate: [0, 90, -60, 0], // 回転
-    scale: [1, 1.1, 0.95, 1], // スケール
-    transition: {
-      duration: duration,
-      ease: "easeInOut",
-      repeat: Infinity,
-      repeatType: "mirror", // 行って戻るアニメーション
-      delay: delay,
-    } as const, // as const で型推論を正確に
-  },
-});
 
 const Hero = () => {
   // アニメーションコントロール
@@ -82,23 +67,14 @@ const Hero = () => {
   return (
     // sectionタグにid="concept"を設定
     <section className={styles.hero} id="concept">
-      {/* 背景シェイプ */}
-      <div className={styles.heroShapes}>
-        <motion.div
-          className={`${styles.heroShape} ${styles.shape1}`}
-          variants={shapeVariants(35, 0)} // 期間35秒、遅延0秒
-          animate="animate"
-        />
-        <motion.div
-          className={`${styles.heroShape} ${styles.shape2}`}
-          variants={shapeVariants(25, 2)} // 期間25秒、遅延2秒
-          animate="animate"
-        />
-        <motion.div
-          className={`${styles.heroShape} ${styles.shape3}`}
-          variants={shapeVariants(40, 4)} // 期間40秒、遅延4秒
-          animate="animate"
-        />
+      {/* 背景動画 */}
+      <div className={styles.videoBackground}>
+        <video className={styles.videoElement} autoPlay loop muted playsInline>
+          <source src={heroBackgroundVideo} type="video/mp4" />
+          お使いのブラウザは動画をサポートしていません。
+        </video>
+        {/* オーバーレイ */}
+        <div className={styles.videoOverlay}></div>
       </div>
 
       {/* メインコンテンツ */}
@@ -110,7 +86,7 @@ const Hero = () => {
           initial="hidden"
           animate={controls} // useAnimationフックで制御
           whileInView="visible" // 要素が画面内に入ったらアニメーション開始
-          viewport={{ once: true, amount: 0.3 }} // 1度だけ、30%見えたら発火
+          viewport={{ once: false, amount: 0.3 }} // 1度だけ、30%見えたら発火
         >
           {/* 見出し */}
           <motion.h1 variants={itemVariants}>
@@ -122,7 +98,9 @@ const Hero = () => {
 
           {/* 説明文 */}
           <motion.p variants={itemVariants}>
-            地域おこし協力隊が生成AIを活用し「地域課題の解決力」と「自己実現力」を高める。未来をデザインする実践型プログラム。
+            地域おこし協力隊が生成AIを活用し<br></br>
+            「地域課題の解決力」と「自己実現力」を高める<br></br>
+            未来をデザインする実践型プログラム
           </motion.p>
 
           {/* ボタンエリア */}

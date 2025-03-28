@@ -1,5 +1,12 @@
 /* src/sections/Header/Header.module.css */
 
+/* ヘッダーのお問い合わせボタン専用のスタイル */
+.nav .buttonPrimary {
+  padding: 0.5rem 1rem;
+  min-width: 160px;
+  text-align: center;
+}
+
 .header {
   padding: 1rem 0;
   position: fixed; /* 画面上部に固定 */
@@ -172,7 +179,7 @@
   align-items: center;
   justify-content: center; /* 中央揃え */
   gap: 0.5em;
-  padding: 0.8rem 1.8rem;
+  padding: 0.8rem 2rem;
   border-radius: var(--border-radius-lg);
   font-weight: 600;
   text-decoration: none;
@@ -185,13 +192,35 @@
 
 /* プライマリボタンスタイル */
 .buttonPrimary {
-  background: var(--gradient-primary);
-  color: white;
+  background: linear-gradient(
+    120deg,
+    rgba(58, 134, 255, 0.8),
+    rgba(131, 56, 236, 0.8)
+  ); /* 透明度を持ったグラデーション */
+  color: white !important;
+  border: 1px solid rgba(58, 134, 255, 0.3); /* 薄いボーダーを追加 */
+  font-weight: 700; /* より太く */
 }
 /* ホバー効果はFramer Motionで制御するため、CSSの :hover はシンプルに */
 .buttonPrimary:hover {
-  color: white; /* 色は変えない */
+  color: white !important;
+  background: linear-gradient(
+    120deg,
+    rgba(58, 134, 255, 0.95),
+    rgba(131, 56, 236, 0.95)
+  ); /* ホバー時はより不透明に */
   /* transform, box-shadow は motion.a で制御 */
+}
+
+/* モバイルメニュー内のボタン用 */
+.mobileNav .buttonPrimary {
+  background: linear-gradient(
+    120deg,
+    rgba(58, 134, 255, 0.8),
+    rgba(131, 56, 236, 0.8)
+  );
+  color: white;
+  border: 1px solid rgba(58, 134, 255, 0.3);
 }
 
 /* --- レスポンシブ --- */

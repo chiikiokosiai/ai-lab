@@ -58,7 +58,7 @@ const Vision = () => {
           variants={contentVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
         >
           <h2>私たちの目指す未来</h2>
           <p>
@@ -99,7 +99,7 @@ const Vision = () => {
           variants={imageVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: false, amount: 0.3 }}
         >
           <img src={visionImage} alt="チームで未来について話し合っている様子" />
           {/* 装飾ドット */}

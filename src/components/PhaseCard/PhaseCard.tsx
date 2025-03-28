@@ -77,7 +77,7 @@ const PhaseCard: React.FC<PhaseCardProps> = ({
       // 個別に whileInView で制御するなら initial と whileInView を指定
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }} // 20%見えたら表示（一度だけ）
+      viewport={{ once: false, amount: 0.2 }} // 20%見えたら表示（一度だけ）
       whileHover="hover" // ホバー状態を 'hover' と名付ける
     >
       {/* 背景の大きな数字 */}

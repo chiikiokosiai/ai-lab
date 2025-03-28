@@ -5,9 +5,8 @@
   height: auto;
   display: flex; /* 垂直中央揃えのため */
   align-items: center;
-  position: relative; /* 背景シェイプの基準点 */
-  overflow: hidden; /* シェイプがはみ出さないように */
-  background: var(--gradient-light); /* グラデーション背景 */
+  position: relative; /* 背景要素の基準点 */
+  overflow: hidden; /* はみ出し防止 */
 }
 
 /* ヘッダー分のスペース確保 */
@@ -17,58 +16,48 @@
   padding-bottom: 80px;
 }
 
-/* --- 背景シェイプ --- */
-.heroShapes {
+/* --- 背景動画スタイル --- */
+.videoBackground {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  z-index: 0; /* コンテンツより後ろ */
+  z-index: 0;
 }
 
-.heroShape {
+.videoElement {
   position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  filter: blur(60px); /* ぼかしを少し強く */
-  /* animation は Framer Motion で制御するため削除 */
-  will-change: transform, opacity; /* アニメーションのパフォーマンス向上 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 画面に合わせてカバー */
 }
 
-.shape1 {
-  width: 450px; /* 少し大きく */
-  height: 450px;
-  background: var(--primary);
-  top: 8%;
-  left: 3%;
-}
-
-.shape2 {
-  width: 350px;
-  height: 350px;
-  background: var(--secondary);
-  bottom: 12%;
-  right: 8%;
-}
-
-.shape3 {
-  width: 250px;
-  height: 250px;
-  background: var(--accent);
-  top: 25%;
-  right: 28%;
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* 半透明の黒オーバーレイ（明るさ調整用） */
 }
 
 /* --- ヒーローコンテンツ --- */
 .heroContainer {
-  position: relative; /* 背景シェイプより手前に */
-  z-index: 1;
+  position: relative; /* 背景要素より手前に */
+  z-index: 2; /* 動画とオーバーレイより前面に */
 }
 
 .heroContent {
   max-width: 680px; /* 少し広げる */
+  color: white; /* 動画背景に合わせてテキスト色を白に */
 }
 
 .heroContent h1 {
@@ -77,6 +66,7 @@
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
   line-height: 1.2; /* 行間少し詰める */
+  color: white; /* 動画背景に合わせてテキスト色を白に */
 }
 
 .highlight {
@@ -112,7 +102,7 @@
   font-size: 1.2rem;
   line-height: 1.8;
   margin-bottom: 2.5rem;
-  color: var(--gray-dark);
+  color: rgba(255, 255, 255, 0.9); /* 少し透明度のある白に変更 */
   max-width: 580px; /* 見出しより少し狭く */
 }
 
@@ -146,22 +136,29 @@
   margin-left: 0.3em;
 }
 
-.buttonPrimary {
-  background: var(--gradient-primary);
-  color: white;
-}
-.buttonPrimary:hover {
-  color: white;
+.hero .heroButtons .buttonPrimary {
+  background: rgba(58, 134, 255, 0.8) !important; /* 透明度を持った青色の背景 */
+  color: white !important;
+  font-weight: 700;
+  border: 1px solid rgba(58, 134, 255, 0.3);
 }
 
-.buttonSecondary {
-  color: var(--primary);
-  background-color: rgba(58, 134, 255, 0.1);
-  border: 1px solid rgba(58, 134, 255, 0.2);
+.hero .heroButtons .buttonPrimary:hover {
+  background: rgba(58, 134, 255, 0.95) !important; /* ホバー時はより不透明に */
+  color: white !important;
 }
-.buttonSecondary:hover {
-  background-color: rgba(58, 134, 255, 0.15);
-  color: var(--primary);
+
+.hero .heroButtons .buttonSecondary {
+  color: white !important; /* 強制的に適用 */
+  background-color: rgba(58, 134, 255, 0.7) !important; /* より濃く、強制適用 */
+  border: 1px solid rgba(58, 134, 255, 0.3);
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.hero .heroButtons .buttonSecondary:hover {
+  background-color: rgba(58, 134, 255, 0.9) !important;
+  color: white !important;
 }
 
 /* --- レスポンシブ --- */
@@ -173,22 +170,6 @@
   .heroContent p {
     font-size: 1.1rem;
   }
-
-  /* 背景シェイプのサイズ調整 */
-  .shape1 {
-    width: 400px;
-    height: 400px;
-  }
-
-  .shape2 {
-    width: 300px;
-    height: 300px;
-  }
-
-  .shape3 {
-    width: 220px;
-    height: 220px;
-  }
 }
 
 @media (max-width: 992px) {
@@ -199,28 +180,6 @@
   .heroContent p {
     font-size: 1.05rem;
     margin-bottom: 2rem;
-  }
-
-  /* 背景シェイプのサイズと位置調整 */
-  .shape1 {
-    width: 350px;
-    height: 350px;
-    top: 5%;
-    left: 0;
-  }
-
-  .shape2 {
-    width: 280px;
-    height: 280px;
-    bottom: 10%;
-    right: 5%;
-  }
-
-  .shape3 {
-    width: 200px;
-    height: 200px;
-    top: 22%;
-    right: 20%;
   }
 
   /* ボタンサイズ調整 */
@@ -255,26 +214,6 @@
 
   .heroButtons {
     justify-content: center; /* ボタン中央揃え */
-  }
-
-  /* 背景シェイプの位置調整 */
-  .shape1 {
-    width: 300px;
-    height: 300px;
-    opacity: 0.08; /* モバイルでは薄く */
-  }
-
-  .shape2 {
-    width: 250px;
-    height: 250px;
-    opacity: 0.08;
-  }
-
-  .shape3 {
-    width: 180px;
-    height: 180px;
-    right: 10%;
-    opacity: 0.08;
   }
 
   /* ハイライト下線の調整 */
@@ -316,26 +255,6 @@
     justify-content: center;
     padding: 0.7rem 1rem;
     font-size: 0.9rem;
-  }
-
-  /* 背景シェイプをさらに調整 */
-  .shape1 {
-    width: 250px;
-    height: 250px;
-    left: -50px;
-  }
-
-  .shape2 {
-    width: 200px;
-    height: 200px;
-    right: -50px;
-  }
-
-  .shape3 {
-    width: 150px;
-    height: 150px;
-    top: 40%;
-    right: 5%;
   }
 }
 
