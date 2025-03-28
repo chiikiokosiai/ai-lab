@@ -53,7 +53,7 @@ const ContactPage = () => {
 
     try {
       // FormspreeのエンドポイントURL（YOUR_FORM_ID部分は実際のIDに置き換える）
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const response = await fetch("https://formspree.io/f/mnnpbjge", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
