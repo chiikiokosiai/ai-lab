@@ -75,6 +75,9 @@
 
 .formGroup input,
 .formGroup textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 0.8rem 1rem;
   border: 2px solid var(--gray-medium);
   border-radius: var(--border-radius-md);
