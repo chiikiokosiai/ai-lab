@@ -16,6 +16,7 @@
   padding: 3rem;
   box-shadow: var(--shadow-md);
   position: relative;
+  width: 100%; /* 幅100%を明示 */
 }
 
 .contactHeader {
@@ -75,9 +76,6 @@
 
 .formGroup input,
 .formGroup textarea {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
   padding: 0.8rem 1rem;
   border: 2px solid var(--gray-medium);
   border-radius: var(--border-radius-md);
@@ -86,6 +84,9 @@
   transition: var(--transition-smooth);
   background-color: var(--light);
   color: var(--dark);
+  width: 100%; /* 幅100%を明示 */
+  max-width: 100%; /* 最大幅も100%に制限 */
+  box-sizing: border-box; /* padding含めてサイズ計算 */
 }
 
 .formGroup input:focus,
@@ -99,6 +100,18 @@
 .formGroup textarea::placeholder {
   color: var(--gray-dark);
   opacity: 0.6;
+}
+
+/* エラー表示のスタイル */
+.errorInput {
+  border-color: var(--accent) !important;
+  background-color: rgba(255, 0, 110, 0.03) !important;
+}
+
+.errorText {
+  color: var(--accent);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
 }
 
 .submitButton {
@@ -116,16 +129,29 @@
   gap: 0.5rem;
   margin-top: 1rem;
   transition: var(--transition-smooth);
+  width: 100%; /* モバイル向けに幅100% */
+  max-width: 100%; /* 最大幅も100%に制限 */
 }
 
-.submitButton:hover {
+.submitButton:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: 0 8px 15px rgba(58, 134, 255, 0.3);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .submitButton svg {
   width: 1.2em;
   height: 1.2em;
+}
+
+/* reCAPTCHA用スタイル */
+.formGroup > div > div {
+  margin: 0 auto;
+  max-width: 100%;
 }
 
 /* フォーム送信後のメッセージ */
@@ -184,6 +210,11 @@
   .contactHeader p {
     font-size: 1rem;
   }
+
+  .submitButton {
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -212,5 +243,27 @@
   .submitButton {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
+    width: 100%; /* モバイルでは幅100% */
+  }
+
+  .formMessage {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .contactContainer {
+    padding: 1.2rem;
+  }
+
+  .formGroup input,
+  .formGroup textarea {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .formGroup label {
+    font-size: 0.9rem;
   }
 }

@@ -1,7 +1,12 @@
 // src/sections/Contact/ContactPage.tsx
 import { useState } from "react";
 import { motion } from "framer-motion";
+import ReCAPTCHA from "react-google-recaptcha";
 import styles from "./ContactPage.module.css";
+
+// 環境変数からキーを取得
+const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
 
 // アニメーション設定
 const pageVariants = {
@@ -24,20 +29,59 @@ const formItemVariants = {
   }),
 };
 
+// フォームデータの型定義
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+// エラーの型定義
+interface FormErrors {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+  recaptcha?: string;
+}
+
+// フォーム送信の状態
+interface FormStatus {
+  submitted: boolean;
+  error: boolean;
+  message: string;
+}
+
 const ContactPage = () => {
-  const [formStatus, setFormStatus] = useState({
+  // 送信状態の管理
+  const [formStatus, setFormStatus] = useState<FormStatus>({
     submitted: false,
     error: false,
     message: "",
   });
 
-  const [formData, setFormData] = useState({
+  // フォームデータの管理
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
 
+  // エラーの管理
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  // reCAPTCHAの状態管理
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  // 送信ボタンの無効状態
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 前回送信時刻の管理（スパム対策）
+  const [lastSubmitTime, setLastSubmitTime] = useState<number | null>(null);
+
+  // 入力フィールドの変更を処理
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -46,22 +90,131 @@ const ContactPage = () => {
       ...prev,
       [name]: value,
     }));
+
+    // 入力時にそのフィールドのエラーをクリア
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
   };
 
+  // フォームのバリデーション
+  const validateForm = (): FormErrors => {
+    const newErrors: FormErrors = {};
+
+    // 名前のバリデーション - 空でないことと日本語文字を含むか
+    if (!formData.name.trim()) {
+      newErrors.name = "お名前を入力してください";
+    } else if (
+      !/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(formData.name)
+    ) {
+      newErrors.name = "日本語の文字を含めてください";
+    }
+
+    // メールアドレスのバリデーション
+    if (!formData.email.trim()) {
+      newErrors.email = "メールアドレスを入力してください";
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)
+    ) {
+      newErrors.email = "有効なメールアドレスを入力してください";
+    }
+
+    // 件名のバリデーション
+    if (!formData.subject.trim()) {
+      newErrors.subject = "件名を入力してください";
+    } else if (formData.subject.length > 100) {
+      newErrors.subject = "件名は100文字以内で入力してください";
+    }
+
+    // メッセージのバリデーション
+    if (!formData.message.trim()) {
+      newErrors.message = "お問い合わせ内容を入力してください";
+    } else if (formData.message.length > 3000) {
+      newErrors.message = "お問い合わせ内容は3000文字以内で入力してください";
+    }
+
+    // スパム内容のチェック
+    const spamWords = [
+      "casino",
+      "viagra",
+      "lottery",
+      "winner",
+      "free money",
+      "bitcoin",
+    ];
+    const messageAndSubject = (
+      formData.message +
+      " " +
+      formData.subject
+    ).toLowerCase();
+
+    if (spamWords.some((word) => messageAndSubject.includes(word))) {
+      newErrors.message = "スパムと判定される内容が含まれています";
+    }
+
+    // 全て英語のみの内容をチェック - 日本語のサイトの場合
+    const hasJapaneseContent = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(
+      formData.message
+    );
+    if (!hasJapaneseContent && formData.message.length > 50) {
+      newErrors.message = "日本語の内容を含めてください";
+    }
+
+    // reCAPTCHAのチェック
+    if (!captchaVerified) {
+      newErrors.recaptcha =
+        "「私はロボットではありません」にチェックしてください";
+    }
+
+    return newErrors;
+  };
+
+  // フォーム送信処理
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // 連続送信防止
+    if (isSubmitting) return;
+
+    // レート制限のチェック（1分に1回まで）
+    const now = Date.now();
+    if (lastSubmitTime && now - lastSubmitTime < 60000) {
+      setFormStatus({
+        submitted: true,
+        error: true,
+        message: "しばらく時間をおいてから再度お試しください",
+      });
+      return;
+    }
+
+    // バリデーション実行
+    const formErrors = validateForm();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
-      // FormspreeのエンドポイントURL（YOUR_FORM_ID部分は実際のIDに置き換える）
-      const response = await fetch("https://formspree.io/f/mnnpbjge", {
+      // 実際の送信処理（APIエンドポイントは環境変数または設定ファイルから取得するべき）
+      // 実際の送信処理の部分を探して
+      const response = await fetch(formspreeEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          _subject: `[生成AIラボ] ${formData.subject}`, // 件名にプレフィックスを追加
+        }),
       });
 
       if (response.ok) {
+        // 送信成功時の処理
         setFormStatus({
           submitted: true,
           error: false,
@@ -75,16 +228,24 @@ const ContactPage = () => {
           subject: "",
           message: "",
         });
+        setCaptchaVerified(false);
+        // 送信時刻を記録
+        setLastSubmitTime(Date.now());
       } else {
-        throw new Error("送信に失敗しました");
+        // APIからのエラーレスポンス
+        const errorData = await response.json();
+        throw new Error(errorData.message || "送信に失敗しました");
       }
     } catch (error) {
+      // エラー処理
       setFormStatus({
         submitted: true,
         error: true,
         message:
           "メッセージの送信中にエラーが発生しました。後ほど再度お試しください。",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -105,6 +266,7 @@ const ContactPage = () => {
           </div>
 
           {formStatus.submitted ? (
+            // 送信後の表示
             <motion.div
               className={`${styles.formMessage} ${
                 formStatus.error ? styles.error : styles.success
@@ -131,6 +293,7 @@ const ContactPage = () => {
               )}
             </motion.div>
           ) : (
+            // フォーム表示
             <motion.form
               className={styles.contactForm}
               onSubmit={handleSubmit}
@@ -153,7 +316,11 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="山田 太郎"
+                  className={errors.name ? styles.errorInput : ""}
                 />
+                {errors.name && (
+                  <div className={styles.errorText}>{errors.name}</div>
+                )}
               </motion.div>
 
               <motion.div
@@ -172,7 +339,11 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="example@email.com"
+                  className={errors.email ? styles.errorInput : ""}
                 />
+                {errors.email && (
+                  <div className={styles.errorText}>{errors.email}</div>
+                )}
               </motion.div>
 
               <motion.div
@@ -191,7 +362,11 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="お問い合わせの件名"
+                  className={errors.subject ? styles.errorInput : ""}
                 />
+                {errors.subject && (
+                  <div className={styles.errorText}>{errors.subject}</div>
+                )}
               </motion.div>
 
               <motion.div
@@ -210,20 +385,44 @@ const ContactPage = () => {
                   required
                   rows={6}
                   placeholder="お問い合わせ内容を入力してください"
+                  className={errors.message ? styles.errorInput : ""}
                 />
+                {errors.message && (
+                  <div className={styles.errorText}>{errors.message}</div>
+                )}
+              </motion.div>
+
+              <motion.div
+                className={styles.formGroup}
+                variants={formItemVariants}
+                custom={4}
+              >
+                <ReCAPTCHA
+                  sitekey={recaptchaSiteKey}
+                  onChange={(value) => {
+                    setCaptchaVerified(!!value);
+                    if (errors.recaptcha) {
+                      setErrors({ ...errors, recaptcha: undefined });
+                    }
+                  }}
+                />
+                {errors.recaptcha && (
+                  <div className={styles.errorText}>{errors.recaptcha}</div>
+                )}
               </motion.div>
 
               <motion.button
                 type="submit"
                 className={styles.submitButton}
                 variants={formItemVariants}
-                custom={4}
+                custom={5}
                 whileHover={{
                   y: -3,
                   boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
                 }}
+                disabled={isSubmitting}
               >
-                送信する
+                {isSubmitting ? "送信中..." : "送信する"}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
