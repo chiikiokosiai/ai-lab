@@ -51,7 +51,7 @@ const Footer = () => {
           <div className={styles.footerInfo}>
             {/* ロゴ (Headerと同様のスタイルを適用) */}
             <Link to="/" className={styles.footerLogo}>
-              <span className={styles.logoIcon}>💡</span>{" "}
+              <span className={styles.logoIcon}></span>地域おこし協力隊×{" "}
               <span className={styles.logoTextAi}>生成AIラボ</span>
             </Link>
             <p>
@@ -103,7 +103,17 @@ const Footer = () => {
                 )}
               </motion.li>
               <motion.li variants={linkItemVariants}>
-                <Link to="/contact">お問い合わせ</Link>
+                <motion.a
+                  href="#contact"
+                  className={`${styles.button} ${styles.buttonSecondary}`}
+                  whileHover={{
+                    y: -2,
+                    boxShadow: "0 4px 8px rgba(58, 134, 255, 0.1)",
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  お問い合わせ
+                </motion.a>
               </motion.li>
             </ul>
           </motion.div>
