@@ -51,11 +51,13 @@ const Footer = () => {
           <div className={styles.footerInfo}>
             {/* ロゴ (Headerと同様のスタイルを適用) */}
             <Link to="/" className={styles.footerLogo}>
-              <span className={styles.logoIcon}></span>地域おこし協力隊×{" "}
+              <span className={styles.logoIcon}></span>地域<br></br>おこし
+              <br></br>
+              協力隊<span>×</span>{" "}
               <span className={styles.logoTextAi}>生成AIラボ</span>
             </Link>
             <p>
-              AI時代の地域活性化をリードする人材育成プログラム。地域とあなたの未来を、共にデザインしましょう。
+              AI時代の地域活性化をリードする人材育成プログラム。地域とあなたの未来を、共にデザインしましょう
             </p>
           </div>
 
@@ -177,7 +179,7 @@ const Footer = () => {
 
         {/* コピーライト */}
         <div className={styles.copyright}>
-          © {currentYear} 地域おこし協力隊 × 生成AIラボ All Rights Reserved.
+          © {currentYear} KUZIRANOKOE All Rights Reserved.
         </div>
       </div>
     </motion.footer>

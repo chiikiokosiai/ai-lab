@@ -106,6 +106,13 @@ const Hero = () => {
             {/* プライマリボタン */}
             <motion.a
               href="#phases"
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById("phases");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               className={`${styles.button} ${styles.buttonPrimary}`}
               whileHover={{
                 y: -3,
