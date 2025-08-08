@@ -266,8 +266,7 @@ const Header = () => {
               variants={logoIconVariants}
               animate="animate" // animate状態を常に適用
             ></motion.span>
-            地域おこし協力隊×{" "}
-            <span className={styles.logoTextAi}>生成AIラボ</span>
+            地域おこし× <span className={styles.logoTextAi}>AI</span>
           </Link>
 
           {/* ハンバーガーメニューボタン（モバイル用） */}

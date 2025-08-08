@@ -52,9 +52,7 @@ const Footer = () => {
             {/* ロゴ (Headerと同様のスタイルを適用) */}
             <Link to="/" className={styles.footerLogo}>
               <span className={styles.logoIcon}></span>地域<br></br>おこし
-              <br></br>
-              協力隊<span>×</span>{" "}
-              <span className={styles.logoTextAi}>生成AIラボ</span>
+              <span>×</span> <span className={styles.logoTextAi}>AI</span>
             </Link>
             <p>
               AI時代の地域活性化をリードする人材育成プログラム。地域とあなたの未来を、共にデザインしましょう

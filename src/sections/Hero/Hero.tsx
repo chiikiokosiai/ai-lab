@@ -96,7 +96,7 @@ const Hero = () => {
 
           {/* 説明文 */}
           <motion.p variants={itemVariants}>
-            地域おこし協力隊が生成AIを活用し<br></br>
+            地域おこしとAIが<br></br>
             「地域課題の解決力」と「自己実現力」を高める<br></br>
             未来をデザインする実践型プログラム
           </motion.p>
