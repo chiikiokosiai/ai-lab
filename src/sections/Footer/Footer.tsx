@@ -3,38 +3,67 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Footer.module.css";
 
-// フッターセクション全体のアニメーション
-const footerVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-};
-
-// リンク列のアニメーション（Stagger Children）
-const linkColumnVariants = {
-  hidden: {}, // 親には特に指定なしでもOK
-  visible: { transition: { staggerChildren: 0.1 } }, // 子要素を0.1秒ずつ遅延
-};
-
-// 個々のリンクアイテムのアニメーション
-const linkItemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
-};
-
 const Footer = () => {
-  const currentYear = new Date().getFullYear(); // 現在の年を取得
-  const location = useLocation(); // 現在のページパスを取得
+  const location = useLocation();
+  const currentYear = new Date().getFullYear();
+
+  // ホームページかどうかのチェック
   const isHomePage = location.pathname === "/";
 
-  // セクションへのスクロール処理
-  const handleSectionScroll = (e: React.MouseEvent, sectionId: string) => {
+  // セクションにスクロールする関数
+  const handleSectionScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
     e.preventDefault();
-    if (isHomePage) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  // アニメーション設定
+  const footerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const linkColumnVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const linkItemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  };
+
+  // ロゴアイコンのアニメーション（脈動効果）
+  const logoIconVariants = {
+    animate: {
+      scale: [1, 1.05, 1],
+      opacity: [1, 0.8, 1],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
@@ -42,40 +71,50 @@ const Footer = () => {
       className={styles.footer}
       variants={footerVariants}
       initial="hidden"
-      whileInView="visible" // 画面内に入ったら表示
-      viewport={{ once: false, amount: 0.1 }} // 10%見えたら（一度だけ）
+      whileInView="visible"
+      viewport={{ once: false, amount: 0.2 }}
     >
-      <div className={`container`}>
+      <div className="container">
         <div className={styles.footerContainer}>
-          {/* 左: ロゴと説明 */}
-          <div className={styles.footerInfo}>
-            {/* ロゴ (Headerと同様のスタイルを適用) */}
-            <Link to="/" className={styles.footerLogo}>
-              <span className={styles.logoIcon}></span>地域<br></br>おこし
-              <span>×</span> <span className={styles.logoTextAi}>AI</span>
-            </Link>
+          {/* 左: ロゴと情報 */}
+          <motion.div
+            className={styles.footerInfo}
+            variants={linkColumnVariants}
+          >
+            <div className={styles.footerLogo}>
+              <motion.span
+                className={styles.logoIcon}
+                variants={logoIconVariants}
+                animate="animate"
+              ></motion.span>
+              <span className={styles.highlight}>地域おこし</span>
+              <span className={styles.accent}>×</span>
+              <span className={styles.highlight}>AI</span>
+            </div>
             <p>
-              AI時代の地域活性化をリードする人材育成プログラム。地域とあなたの未来を、共にデザインしましょう
+              地域×AI×起業のコミュニティプラットフォーム。
+              <br />
+              テクノロジーで地域の未来を創造します。
             </p>
-          </div>
+          </motion.div>
 
-          {/* 中央: クイックリンク */}
+          {/* 中央: サイトナビゲーション */}
           <motion.div
             className={styles.footerLinks}
-            variants={linkColumnVariants} // StaggerChildrenを適用
+            variants={linkColumnVariants}
           >
-            <h3>クイックリンク</h3>
+            <h3>サイトナビゲーション</h3>
             <ul>
               <motion.li variants={linkItemVariants}>
                 {isHomePage ? (
                   <a
-                    href="#concept"
-                    onClick={(e) => handleSectionScroll(e, "concept")}
+                    href="#participants"
+                    onClick={(e) => handleSectionScroll(e, "participants")}
                   >
-                    コンセプト
+                    参加者
                   </a>
                 ) : (
-                  <Link to="/">コンセプト</Link>
+                  <Link to="/">参加者</Link>
                 )}
               </motion.li>
               <motion.li variants={linkItemVariants}>
@@ -84,10 +123,22 @@ const Footer = () => {
                     href="#phases"
                     onClick={(e) => handleSectionScroll(e, "phases")}
                   >
-                    5つのステップ
+                    7つのステップ
                   </a>
                 ) : (
-                  <Link to="/">5つのステップ</Link>
+                  <Link to="/">7つのステップ</Link>
+                )}
+              </motion.li>
+              <motion.li variants={linkItemVariants}>
+                {isHomePage ? (
+                  <a
+                    href="#connect"
+                    onClick={(e) => handleSectionScroll(e, "connect")}
+                  >
+                    つながり方
+                  </a>
+                ) : (
+                  <Link to="/">つながり方</Link>
                 )}
               </motion.li>
               <motion.li variants={linkItemVariants}>
@@ -155,7 +206,6 @@ const Footer = () => {
           >
             <h3>SNS</h3>
             <ul>
-              {/* 実際のSNSリンクに置き換えてください */}
               <motion.li variants={linkItemVariants}>
                 <a href="#" target="_blank" rel="noopener noreferrer">
                   X (Twitter)
@@ -177,7 +227,7 @@ const Footer = () => {
 
         {/* コピーライト */}
         <div className={styles.copyright}>
-          © {currentYear} KUZIRANOKOE All Rights Reserved.
+          © {currentYear} 地域おこし×AIコミュニティ All Rights Reserved.
         </div>
       </div>
     </motion.footer>

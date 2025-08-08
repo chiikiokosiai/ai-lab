@@ -107,6 +107,31 @@
   flex-wrap: wrap; /* モバイルで折り返し */
 }
 
+/* Hero.module.cssに追加するaccentクラス */
+
+.accent {
+  display: inline-block;
+  font-size: 0.8em; /* 少し大きく */
+  color: var(--accent); /* ピンク色 (#ff006e) */
+  font-weight: 900;
+  margin: 0 0.3em; /* 左右に余白 */
+  text-shadow: 0 0 15px rgba(255, 0, 110, 0.6); /* ピンクの光る効果 */
+  animation: pulse 2s ease-in-out infinite; /* ほのかな脈動アニメーション */
+}
+
+/* 脈動アニメーション */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
 /* --- ボタン (Header.module.css と共通化すべきか検討) --- */
 .button {
   display: inline-flex;

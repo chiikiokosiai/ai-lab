@@ -266,7 +266,9 @@ const Header = () => {
               variants={logoIconVariants}
               animate="animate" // animate状態を常に適用
             ></motion.span>
-            地域おこし×<span className={styles.logoTextAi}>AI</span>
+            <span className={styles.highlight}>地域おこし</span>
+            <span className={styles.accent}>×</span>
+            <span className={styles.highlight}>AI</span>
           </Link>
 
           {/* ハンバーガーメニューボタン（モバイル用） */}
@@ -284,23 +286,19 @@ const Header = () => {
           {/* PCナビゲーション */}
           <nav className={styles.nav}>
             <ul>
-              {/* 各メニュー項目 */}
               <li>
                 {isHomePage ? (
                   <a
-                    href="#concept"
+                    href="#participants"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleNavItemClick();
-                      scrollToSection("concept");
+                      scrollToSection("participants");
                     }}
                   >
-                    コンセプト
+                    参加者
                   </a>
                 ) : (
-                  <Link to="/" onClick={handleNavItemClick}>
-                    コンセプト
-                  </Link>
+                  <Link to="/">参加者</Link>
                 )}
               </li>
               <li>
@@ -309,16 +307,28 @@ const Header = () => {
                     href="#phases"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleNavItemClick();
                       scrollToSection("phases");
                     }}
                   >
-                    5つのステップ
+                    7つのステップ
                   </a>
                 ) : (
-                  <Link to="/" onClick={handleNavItemClick}>
-                    5つのステップ
-                  </Link>
+                  <Link to="/">7つのステップ</Link>
+                )}
+              </li>
+              <li>
+                {isHomePage ? (
+                  <a
+                    href="#connect"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection("connect");
+                    }}
+                  >
+                    つながり方
+                  </a>
+                ) : (
+                  <Link to="/">つながり方</Link>
                 )}
               </li>
               <li>
@@ -327,31 +337,26 @@ const Header = () => {
                     href="#vision"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleNavItemClick();
                       scrollToSection("vision");
                     }}
                   >
                     ビジョン
                   </a>
                 ) : (
-                  <Link to="/" onClick={handleNavItemClick}>
-                    ビジョン
-                  </Link>
+                  <Link to="/">ビジョン</Link>
                 )}
               </li>
-              {/* お問い合わせボタン */}
               <li>
                 <motion.div
                   whileHover={{
                     y: -3,
                     boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
-                  }} // ホバーアニメーション
+                  }}
                   transition={{ duration: 0.2 }}
                 >
                   <Link
                     to="/contact"
-                    className={`${styles.button} ${styles.buttonPrimary}`} // ボタン用のスタイルクラス
-                    onClick={handleNavItemClick}
+                    className={`${styles.button} ${styles.buttonPrimary}`}
                   >
                     お問い合わせ
                   </Link>
@@ -381,18 +386,18 @@ const Header = () => {
                     >
                       {isHomePage ? (
                         <a
-                          href="#concept"
+                          href="#participants"
                           onClick={(e) => {
                             e.preventDefault();
                             handleNavItemClick();
-                            scrollToSection("concept");
+                            scrollToSection("participants");
                           }}
                         >
-                          コンセプト
+                          参加者
                         </a>
                       ) : (
                         <Link to="/" onClick={handleNavItemClick}>
-                          コンセプト
+                          参加者
                         </Link>
                       )}
                     </motion.li>
@@ -411,16 +416,39 @@ const Header = () => {
                             scrollToSection("phases");
                           }}
                         >
-                          5つのステップ
+                          7つのステップ
                         </a>
                       ) : (
                         <Link to="/" onClick={handleNavItemClick}>
-                          5つのステップ
+                          7つのステップ
                         </Link>
                       )}
                     </motion.li>
                     <motion.li
                       custom={2}
+                      variants={menuItemVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      {isHomePage ? (
+                        <a
+                          href="#connect"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleNavItemClick();
+                            scrollToSection("connect");
+                          }}
+                        >
+                          つながり方
+                        </a>
+                      ) : (
+                        <Link to="/" onClick={handleNavItemClick}>
+                          つながり方
+                        </Link>
+                      )}
+                    </motion.li>
+                    <motion.li
+                      custom={3}
                       variants={menuItemVariants}
                       initial="hidden"
                       animate="visible"
@@ -443,7 +471,7 @@ const Header = () => {
                       )}
                     </motion.li>
                     <motion.li
-                      custom={3}
+                      custom={4}
                       variants={menuItemVariants}
                       initial="hidden"
                       animate="visible"
@@ -454,11 +482,11 @@ const Header = () => {
                           boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
                         }}
                         transition={{ duration: 0.2 }}
+                        onClick={handleNavItemClick}
                       >
                         <Link
                           to="/contact"
                           className={`${styles.button} ${styles.buttonPrimary}`}
-                          onClick={handleNavItemClick}
                         >
                           お問い合わせ
                         </Link>

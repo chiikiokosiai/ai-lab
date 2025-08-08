@@ -1,44 +1,58 @@
 // src/sections/Phases/Phases.tsx
 import { motion } from "framer-motion";
-import PhaseCard from "../../components/PhaseCard/PhaseCard"; // 作成したカードコンポーネントをインポート
+import PhaseCard from "../../components/PhaseCard/PhaseCard";
 import styles from "./Phases.module.css";
 
-// フェーズデータ
+// フェーズデータ（コミュニティ参加の流れ）
 const phasesData = [
   {
     number: 0,
     icon: "🧭",
-    title: "現在地の発見",
+    title: "興味・関心の発見",
     description:
-      "AIとの対話を通じ、価値観や強みを深く理解し、キャリアの羅針盤を設定します",
+      "地域×AIの可能性に気づく。あなたの関心や課題意識がコミュニティとつながる第一歩",
   },
   {
     number: 1,
-    icon: "✍️",
-    title: "言語化スキルの習得",
+    icon: "👥",
+    title: "コミュニティ参加",
     description:
-      "思考を整理し、伝わる言葉へ。生成AIを活用した思考整理と文章力向上トレーニング",
+      "オンラインMeetupやDiscordで仲間と出会う。多様な背景を持つメンバーとの交流が始まり",
   },
   {
     number: 2,
-    icon: "🔍",
-    title: "地域インサイトの探求",
+    icon: "📚",
+    title: "学び・スキル習得",
     description:
-      "AIによるデータ分析で住民のニーズを可視化。本質的な地域課題を発見する力を養います",
+      "仲間と一緒にAIスキルを身につける。ワークショップや勉強会で実践的な知識を共有",
   },
   {
     number: 3,
-    icon: "🗺️",
-    title: "未来ロードマップ設計",
+    icon: "💡",
+    title: "プロジェクト創出",
     description:
-      "自己の強みと地域ニーズを掛け合わせ、実現可能な事業アイデアと行動計画を創出します",
+      "コラボレーションでアイデアを形に。異なる専門性を持つメンバーとの共創でプロジェクトが生まれる",
   },
   {
     number: 4,
     icon: "🚀",
-    title: "実践と共創",
+    title: "実践・インパクト創出",
     description:
-      "計画を実行に移し、SNS等で発信。仲間を集め、地域内外との連携によるインパクト創出へ",
+      "地域での実装・実証実験。プロジェクトを実際に地域に展開し、社会的インパクトを生み出す",
+  },
+  {
+    number: 5,
+    icon: "📈",
+    title: "AIマーケティング応用",
+    description:
+      "最新のAI手法でマーケティングを強化。データ分析からコンテンツ生成まで実践的なスキルを習得",
+  },
+  {
+    number: 6,
+    icon: "💻",
+    title: "Vibecoding開発",
+    description:
+      "音楽・感情とコードの融合開発。最新のクリエイティブテクノロジーで表現の可能性を広げる",
   },
 ];
 
@@ -48,7 +62,7 @@ const gridVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // カードを0.15秒ずつ遅延表示
+      staggerChildren: 0.1, // 7個になったので少し早く
     },
   },
 };
@@ -61,7 +75,6 @@ const headerVariants = {
 
 const Phases = () => {
   return (
-    // sectionタグにid="phases"と背景色用クラスを設定
     <section className={`${styles.section} ${styles.bgGray}`} id="phases">
       <div className={`container`}>
         {/* セクションヘッダー */}
@@ -73,10 +86,11 @@ const Phases = () => {
           viewport={{ once: false, amount: 0.3 }}
         >
           <h2>
-            育成の<span className={styles.highlightNumber}>5</span>ステップ
+            コミュニティ参加の<span className={styles.highlightNumber}>7</span>
+            ステップ
           </h2>
           <p>
-            自己理解から地域貢献、そして未来設計へ。AIを相棒に、あなたの可能性を最大限に引き出すステップバイステップの旅。
+            興味・関心からスタートして、仲間と学び、プロジェクトを創出。最新のAI技術まで習得できる段階的な成長プロセス
           </p>
         </motion.div>
 
@@ -85,13 +99,11 @@ const Phases = () => {
           className={styles.phasesGrid}
           variants={gridVariants}
           initial="hidden"
-          whileInView="visible" // グリッド全体が画面に入ったら子要素のアニメーション開始
-          viewport={{ once: false, amount: 0.1 }} // 10%見えたら
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.1 }}
         >
           {/* データからカードを生成 */}
           {phasesData.map((phase) => (
-            // PhaseCardコンポーネントを使用
-            // PhaseCard自体のvariants (cardVariants) がここで適用される
             <PhaseCard
               key={phase.number}
               number={phase.number}
@@ -100,6 +112,45 @@ const Phases = () => {
               description={phase.description}
             />
           ))}
+
+          {/* さらに詳しく見るボタン（Vibecodingカードの隣に配置） */}
+          <motion.div
+            className={styles.moreInfoCard}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            <motion.button
+              className={styles.moreInfoButton}
+              whileHover={{
+                y: -3,
+                boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
+              }}
+              transition={{ duration: 0.2 }}
+              onClick={() => {
+                // 将来的には詳細ページへのリンク
+                console.log("詳細ページへ移動（未実装）");
+              }}
+            >
+              さらに詳しく見る
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1em"
+                height="1em"
+                fill="currentColor"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
+                />
+              </svg>
+            </motion.button>
+            <p className={styles.moreInfoText}>
+              各ステップの詳細カリキュラムや、追加の専門講座についてご紹介します
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

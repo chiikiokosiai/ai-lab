@@ -88,17 +88,17 @@ const Hero = () => {
         >
           {/* 見出し */}
           <motion.h1 variants={itemVariants}>
-            AIの力で<br></br>
-            <span className={styles.highlight}>地域</span>と
-            <span className={styles.highlight}>人生</span>
-            を変える
+            <span className={styles.highlight}>地域おこし</span>
+            <span className={styles.accent}>×</span>
+            <span className={styles.highlight}>AI</span>で<br></br>
+            未来を創る
           </motion.h1>
 
           {/* 説明文 */}
           <motion.p variants={itemVariants}>
-            地域おこしとAIが<br></br>
-            「地域課題の解決力」と「自己実現力」を高める<br></br>
-            未来をデザインする実践型プログラム
+            AIが変える地域おこしの新しいカタチ<br></br>
+            地域課題の解決から起業まで、<br></br>
+            テクノロジーで地域の可能性を最大化する
           </motion.p>
 
           {/* ボタンエリア */}
@@ -108,9 +108,9 @@ const Hero = () => {
               href="#phases"
               onClick={(e) => {
                 e.preventDefault();
-                const element = document.getElementById("phases");
-                if (element) {
-                  element.scrollIntoView({ behavior: "smooth" });
+                const target = document.getElementById("phases");
+                if (target) {
+                  target.scrollIntoView({ behavior: "smooth" });
                 }
               }}
               className={`${styles.button} ${styles.buttonPrimary}`}
@@ -120,7 +120,7 @@ const Hero = () => {
               }}
               transition={{ duration: 0.2 }}
             >
-              プログラム詳細
+              始めてみる
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -130,22 +130,29 @@ const Hero = () => {
               >
                 <path
                   fillRule="evenodd"
-                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                  d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
                 />
               </svg>
             </motion.a>
 
             {/* セカンダリボタン */}
             <motion.a
-              href="#contact"
+              href="#vision"
+              onClick={(e) => {
+                e.preventDefault();
+                const target = document.getElementById("vision");
+                if (target) {
+                  target.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               className={`${styles.button} ${styles.buttonSecondary}`}
               whileHover={{
                 y: -2,
-                boxShadow: "0 4px 8px rgba(58, 134, 255, 0.1)",
+                borderColor: "rgba(255, 255, 255, 0.8)",
               }}
               transition={{ duration: 0.2 }}
             >
-              今すぐ相談する
+              ビジョンを見る
             </motion.a>
           </motion.div>
         </motion.div>

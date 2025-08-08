@@ -1,58 +1,71 @@
 // src/sections/Vision/Vision.tsx
 import { motion } from "framer-motion";
 import styles from "./Vision.module.css";
-// 画像ファイルをインポート (後で assets に配置)
-import visionImage from "../../assets/vision-image.png";
-// 左側のコンテンツ用アニメーションバリアント
+
+// コンテンツのアニメーションバリアント
 const contentVariants = {
-  hidden: { opacity: 0, x: -50 }, // 初期状態: 左から-50px、透明
-  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } }, // 表示状態: X:0、不透明
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
+  },
 };
 
-// 右側の画像用アニメーションバリアント
-const imageVariants = {
-  hidden: { opacity: 0, scale: 0.9 }, // 初期状態: 少し縮小、透明
+// 統計データのアニメーション
+const statsVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      staggerChildren: 0.1,
+      delayChildren: 0.4,
+    },
+  },
+};
+
+const statItemVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, ease: "easeOut", delay: 0.2 },
-  }, // 表示状態: 通常サイズ、不透明 (少し遅れて表示)
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
 };
 
-// ドットパターンのSVGコンポーネント (ファイル分割してもOK)
-const DotPattern = ({
-  id,
-  width = 10,
-  height = 10,
-  radius = 1,
-}: {
-  id: string;
-  width?: number;
-  height?: number;
-  radius?: number;
-}) => (
-  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <pattern
-        id={id}
-        x="0"
-        y="0"
-        width={width}
-        height={height}
-        patternUnits="userSpaceOnUse"
-      >
-        <circle cx={radius} cy={radius} r={radius} fill="var(--primary)" />
-      </pattern>
-    </defs>
-    <rect x="0" y="0" width="100%" height="100%" fill={`url(#${id})`} />
-  </svg>
-);
+// 背景装飾のアニメーション
+const decorationVariants = {
+  hidden: { opacity: 0, scale: 0.5 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 1,
+      ease: "easeOut",
+      delay: 0.8,
+    },
+  },
+};
 
 const Vision = () => {
   return (
     <section className={styles.section} id="vision">
+      {/* 背景装飾 */}
+      <motion.div
+        className={styles.backgroundDecoration}
+        variants={decorationVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+      />
+
       <div className={`container ${styles.visionContainer}`}>
-        {/* 左側: テキストコンテンツ */}
+        {/* 中央配置のコンテンツ */}
         <motion.div
           className={styles.visionContent}
           variants={contentVariants}
@@ -60,25 +73,80 @@ const Vision = () => {
           whileInView="visible"
           viewport={{ once: false, amount: 0.3 }}
         >
-          <h2>私たちの目指す未来</h2>
-          <p>
-            このコミュニティから巣立った人たちが、AIを活用できる地域の中核人材となり、全国各地で活躍する
-            <br></br>そんなロールモデルを全国へ輩出します
+          <h2>コミュニティが描く未来像</h2>
+          <p className={styles.mainDescription}>
+            <span className={styles.highlight}>地域おこし×AI</span>の力で、
+            日本全国に変革の波を起こす
           </p>
           <p>
-            最終的には、この育成モデルが全国のスタンダードとなり、地域活性化の新しいエンジンとなることを目指しています
+            このコミュニティから巣立った人たちが、各地域でAIを活用した革新的なプロジェクトを展開。
+            地域課題の解決から新産業の創出まで、テクノロジーと地域の力を掛け合わせた
+            <strong>新しい日本の創造</strong>を目指しています。
           </p>
+
+          {/* 将来の目標 */}
+          <div className={styles.futureGoals}>
+            <h3>2030年までの目標</h3>
+            <div className={styles.goalsList}>
+              <div className={styles.goalItem}>
+                <span className={styles.goalIcon}>🗾</span>
+                <span>全国47都道府県での地域×AIプロジェクト実現</span>
+              </div>
+              <div className={styles.goalItem}>
+                <span className={styles.goalIcon}>👥</span>
+                <span>コミュニティメンバー1万人突破</span>
+              </div>
+              <div className={styles.goalItem}>
+                <span className={styles.goalIcon}>⚡</span>
+                <span>年間100件の地域課題解決事例創出</span>
+              </div>
+              <div className={styles.goalItem}>
+                <span className={styles.goalIcon}>🚀</span>
+                <span>地域発AIスタートアップ500社輩出</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 統計データ */}
+          <motion.div
+            className={styles.statsContainer}
+            variants={statsVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+          >
+            <motion.div className={styles.statItem} variants={statItemVariants}>
+              <div className={styles.statNumber}>47</div>
+              <div className={styles.statLabel}>都道府県への展開目標</div>
+            </motion.div>
+            <motion.div className={styles.statItem} variants={statItemVariants}>
+              <div className={styles.statNumber}>10,000+</div>
+              <div className={styles.statLabel}>目標コミュニティメンバー数</div>
+            </motion.div>
+            <motion.div className={styles.statItem} variants={statItemVariants}>
+              <div className={styles.statNumber}>500</div>
+              <div className={styles.statLabel}>輩出予定スタートアップ数</div>
+            </motion.div>
+          </motion.div>
+
           {/* ボタン */}
           <motion.a
-            href="#contact"
+            href="#connect"
             className={`${styles.button} ${styles.buttonPrimary}`}
             whileHover={{
               y: -3,
               boxShadow: "0 8px 15px rgba(58, 134, 255, 0.3)",
             }}
             transition={{ duration: 0.2 }}
+            onClick={(e) => {
+              e.preventDefault();
+              const target = document.getElementById("connect");
+              if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
           >
-            未来を共に創る
+            変革の一員になる
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
@@ -92,34 +160,6 @@ const Vision = () => {
               />
             </svg>
           </motion.a>
-        </motion.div>
-
-        {/* 右側: 画像 */}
-        <motion.div
-          className={styles.visionImage}
-          variants={imageVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.3 }}
-        >
-          <img src={visionImage} alt="チームで未来について話し合っている様子" />
-          {/* 装飾ドット */}
-          <div className={`${styles.visionDots} ${styles.dotsTopRight}`}>
-            <DotPattern
-              id="dot-pattern-1"
-              width={12}
-              height={12}
-              radius={1.2}
-            />
-          </div>
-          <div className={`${styles.visionDots} ${styles.dotsBottomLeft}`}>
-            <DotPattern
-              id="dot-pattern-2"
-              width={18}
-              height={18}
-              radius={1.5}
-            />
-          </div>
         </motion.div>
       </div>
     </section>

@@ -1,5 +1,97 @@
 /* src/sections/Header/Header.module.css */
 
+/* Header.module.css に追加（Heroと完全に同じ） */
+
+.highlight {
+  position: relative;
+  display: inline-block;
+  color: #ffffff; /* Heroと同じ白色 */
+  font-weight: 900;
+  padding: 0 0.1em;
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* Heroと同じ青い光る効果 */
+}
+
+/* .highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 0.1em;
+  right: 0.1em;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6); 
+  border-radius: 2px;
+  z-index: -1;
+  transform: skewX(-15deg);
+  opacity: 0.8;
+} */
+
+.accent {
+  display: inline-block;
+  font-size: 0.8em;
+  color: var(--accent); /* ピンク色 */
+  font-weight: 900;
+  margin: 0 0.2em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Footer.module.css に追加（背景が黒なので少し調整） */
+
+.highlight {
+  position: relative;
+  display: inline-block;
+  color: #ffffff; /* 白色のテキスト */
+  font-weight: 900;
+  padding: 0 0.1em;
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* 青い光る効果 */
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 0.1em;
+  right: 0.1em;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6); /* 白っぽい下線 */
+  border-radius: 2px;
+  z-index: -1;
+  transform: skewX(-15deg);
+  opacity: 0.8;
+}
+
+.accent {
+  display: inline-block;
+  font-size: 0.8em;
+  color: var(--accent); /* ピンク色 */
+  font-weight: 900;
+  margin: 0 0.2em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
 /* ヘッダーのお問い合わせボタン専用のスタイル */
 .nav .buttonPrimary {
   padding: 0.5rem 1rem;
@@ -7,26 +99,27 @@
   text-align: center;
 }
 
+/* ヘッダー背景をフッターと同じダークテーマに */
 .header {
   padding: 1rem 0;
-  position: fixed; /* 画面上部に固定 */
+  position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 1000; /* 他の要素より手前に表示 */
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px); /* 背景をぼかす（すりガラス効果） */
-  border-bottom: 1px solid transparent; /* 初期状態では境界線なし */
+  z-index: 1000;
+  background-color: var(--dark); /* フッターと同じダーク背景 */
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* 白っぽいボーダー */
   transition: padding 0.3s ease, background-color 0.3s ease,
     backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* スクロールされた時のスタイル */
+/* スクロール時もダークテーマを維持 */
 .scrolled {
-  padding: 0.75rem 0; /* 少し高さを詰める */
-  background-color: rgba(255, 255, 255, 0.95); /* 少し不透明に */
-  box-shadow: var(--shadow-md); /* 下に影をつける */
-  border-bottom-color: var(--gray-medium); /* 下境界線を表示 */
+  padding: 0.75rem 0;
+  background-color: var(--dark); /* ダーク背景を維持 */
+  box-shadow: var(--shadow-md);
+  border-bottom-color: rgba(255, 255, 255, 0.2); /* 少し明るいボーダー */
 }
 
 .headerContainer {
@@ -75,8 +168,9 @@
   gap: 2.5rem;
 }
 
+/* ナビゲーションリンクの色を白に */
 .nav a {
-  color: var(--dark);
+  color: var(--light); /* 白色 */
   font-weight: 500;
   text-decoration: none;
   position: relative;
@@ -98,79 +192,131 @@
 }
 
 .nav a:hover {
-  color: var(--primary);
+  color: var(--primary); /* ホバー時はプライマリカラー */
 }
 
 .nav a:hover::after {
   width: 100%;
 }
 
-/* --- ハンバーガーメニューボタン --- */
+/* ハンバーガーメニューの三本線をロゴと同じカラーに */
 .menuToggle {
-  display: none; /* PCでは非表示 */
+  display: none; /* デスクトップでは非表示 */
   flex-direction: column;
   justify-content: space-between;
   width: 30px;
-  height: 22px; /* 高さを少し調整 */
-  background: transparent;
+  height: 24px;
+  background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  z-index: 1300; /* モバイルメニューより前に表示（さらに上げる） */
-  position: relative; /* z-indexを有効にするため */
+  z-index: 1220;
 }
 
 .line {
   width: 100%;
   height: 3px;
-  background-color: var(--dark);
-  border-radius: 3px;
-  transition: all 0.3s ease;
+  background-color: #ffffff; /* ロゴと同じ白色 */
+  border-radius: 2px;
+  transition: var(--transition-smooth);
   transform-origin: center;
-  position: relative;
-  display: block;
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* ロゴと同じ光る効果 */
+  box-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* box-shadowでも光る効果 */
 }
 
-/* --- モバイルメニュー --- */
+/* モバイルメニューも背景をダークに */
 .mobileMenu {
-  display: none; /* PCでは非表示 */
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.98);
-  z-index: 1200; /* 最大値に近い値に設定 */
-  padding: 6rem 2rem 2rem;
-  overflow-y: auto;
-  isolation: isolate; /* 新しいスタッキングコンテキストを作成 */
+  width: 100%;
+  height: 100vh;
+  background-color: var(--dark); /* ダーク背景 */
+  z-index: 1100;
+  display: none;
+}
+
+.mobileNav {
+  padding: 8rem 2rem 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; /* 中央揃え追加 */
 }
 
 .mobileNav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2rem;
-  list-style: none;
-  height: 100%;
-  justify-content: center;
+  align-items: center; /* リスト項目も中央揃え */
+  width: 100%; /* 幅100%で中央揃えを確実に */
+}
+
+.mobileNav li {
+  width: 100%; /* リスト項目の幅100% */
+  text-align: center; /* テキスト中央揃え */
 }
 
 .mobileNav a {
-  color: var(--dark);
-  font-weight: 600;
+  color: var(--light); /* 白色 */
   font-size: 1.5rem;
+  font-weight: 600;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-md);
-  transition: var(--transition-smooth);
-  display: block;
   text-align: center;
+  transition: color var(--transition-smooth);
+  display: block; /* ブロック要素として表示 */
+  width: 100%; /* リンクの幅100% */
 }
 
 .mobileNav a:hover {
-  color: var(--primary);
-  background-color: rgba(58, 134, 255, 0.05);
+  color: var(--primary); /* ホバー時はプライマリカラー */
+}
+
+/* モバイルメニュー内のボタンも中央揃え */
+.mobileNav .button {
+  margin: 0 auto; /* ボタンを中央に */
+  display: block; /* ブロック要素として表示 */
+  width: fit-content; /* ボタンは内容に合わせた幅 */
+  max-width: 250px; /* 最大幅制限 */
+}
+
+/* レスポンシブ調整 */
+@media (max-width: 992px) {
+  .nav {
+    display: none;
+  }
+
+  .menuToggle {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+
+  /* メニューオープン時の背景 */
+  .header.menuOpen {
+    background-color: var(--dark);
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .menuToggle {
+    width: 26px;
+    height: 20px;
+  }
+
+  .line {
+    height: 3px;
+  }
+
+  .mobileNav a {
+    font-size: 1.3rem;
+  }
 }
 
 /* --- 共通ボタンスタイル (index.css から移動 or 共通化も検討) --- */
@@ -238,15 +384,15 @@
     display: block; /* モバイルメニューを表示可能に */
   }
 
-  /* モバイルでは最初から少し背景色をつける */
+  /* モバイルでもダーク背景を維持 */
   .header:not(.scrolled) {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: var(--dark); /* ダーク背景 */
     padding: 1rem 0;
   }
 
-  /* メニューオープン時のヘッダー背景を不透明に */
+  /* メニューオープン時もダーク背景 */
   .header.menuOpen {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: var(--dark); /* ダーク背景 */
     box-shadow: none;
   }
 }

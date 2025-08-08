@@ -1,5 +1,97 @@
 /* src/sections/Footer/Footer.module.css */
 
+/* Header.module.css に追加（Heroと完全に同じ） */
+
+.highlight {
+  position: relative;
+  display: inline-block;
+  color: #ffffff; /* Heroと同じ白色 */
+  font-weight: 900;
+  padding: 0 0.1em;
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* Heroと同じ青い光る効果 */
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 0.1em;
+  right: 0.1em;
+  height: 5px; /* Heroと同じ太さ */
+  background: rgba(255, 255, 255, 0.6); /* Heroと同じ白っぽい下線 */
+  border-radius: 2px;
+  z-index: -1;
+  transform: skewX(-15deg);
+  opacity: 0.8;
+}
+
+.accent {
+  display: inline-block;
+  font-size: 0.8em;
+  color: var(--accent); /* ピンク色 */
+  font-weight: 900;
+  margin: 0 0.2em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Footer.module.css に追加（背景が黒なので少し調整） */
+
+.highlight {
+  position: relative;
+  display: inline-block;
+  color: #ffffff; /* 白色のテキスト */
+  font-weight: 900;
+  padding: 0 0.1em;
+  text-shadow: 0 0 10px rgba(58, 134, 255, 0.8); /* 青い光る効果 */
+}
+
+.highlight::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  left: 0.1em;
+  right: 0.1em;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6); /* 白っぽい下線 */
+  border-radius: 2px;
+  z-index: -1;
+  transform: skewX(-15deg);
+  opacity: 0.8;
+}
+
+.accent {
+  display: inline-block;
+  font-size: 0.8em;
+  color: var(--accent); /* ピンク色 */
+  font-weight: 900;
+  margin: 0 0.2em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
 .footer {
   padding: 5rem 0 3rem; /* 上に十分な余白、下は少し詰める */
   background-color: var(--dark); /* 背景は濃い色 */
