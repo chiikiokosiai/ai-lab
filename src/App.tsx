@@ -3,7 +3,7 @@ import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Header from "./sections/Header/Header";
 import Hero from "./sections/Hero/Hero";
-import WhoWeAre from "./sections/WhoWeAre/WhoWeAre"; // 新しく追加
+import WhoWeAre from "./sections/WhoWeAre/WhoWeAre";
 import Phases from "./sections/Phases/Phases";
 import HowWeConnect from "./sections/HowWeConnect/HowWeConnect";
 import Vision from "./sections/Vision/Vision";
@@ -17,9 +17,8 @@ const ScrollToTop = () => {
   const location = useLocation();
   const { pathname, hash } = location;
 
-  // @ts-ignore を使って一時的に型チェックを無視
   useEffect(() => {
-    // @ts-ignore
+    // @ts-ignore: scrollIntoViewの型定義の問題を一時的に回避
     if (hash) {
       const id = hash.replace("#", "");
       const element = document.getElementById(id);
@@ -39,7 +38,7 @@ const HomePage = () => {
   return (
     <main>
       <Hero />
-      <WhoWeAre /> {/* HeroとPhasesの間に追加 */}
+      <WhoWeAre />
       <Phases />
       <HowWeConnect />
       <Vision />

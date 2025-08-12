@@ -3,7 +3,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import styles from "./Hero.module.css";
 // 背景動画をインポート
-import heroBackgroundVideo from "../../assets/hero-background.mp4";
+import heroBackgroundVideo from "../../assets/Hero-Background_00.mp4";
 
 // コンテンツ全体の表示アニメーション（Staggering用）
 const containerVariants = {
