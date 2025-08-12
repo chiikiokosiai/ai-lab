@@ -2,7 +2,7 @@
   "name": "ai-chiiki-lab",
   "private": true,
   "version": "0.1.0",
-  "homepage": "https://zeronanpu.github.io/ai-lab",
+  "homepage": "https://chiikiokoshiai.com/",
   "type": "module",
   "scripts": {
     "dev": "vite",
